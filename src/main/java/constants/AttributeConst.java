@@ -18,9 +18,32 @@ public enum AttributeConst {
     TOKEN("_token"),
     ERR("errors"),
 
+    //ログイン中のユーザー
+    LOGIN_USE("login_user"),
+
+    //ログイン画面
+    LOGIN_ERR("loginError"),
+
+    //ユーザー管理
+    USER("user"),
+    USERS("users"),
+    USE_COUNT("employees_count"),
+    USE_ID("id"),
+    USE_NAME("name"),
+    USE_EMAIL("email"),
+    USE_PASS("password"),
+
     //削除フラグ
     DEL_FLAG_TRUE(1),
-    DEL_FLAG_FALSE(0);
+    DEL_FLAG_FALSE(0),
+
+    //投稿内容管理
+    REPORT("report"),
+    REPORTS("reports"),
+    REP_COUNT("reports_count"),
+    REP_ID("id"),
+    REP_TITLE("title"),
+    REP_CONTENT("content");
 
     private final String text;
     private final Integer i;
