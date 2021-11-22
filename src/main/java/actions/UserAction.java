@@ -134,6 +134,8 @@ public class UserAction extends ActionBase {
 
                     //セッションに登録完了のフラッシュメッセージを設定
                     putSessionScope(AttributeConst.FLUSH, MessageConst.I_MEMBER_REGISTERED.getMessage());
+                    //セッションにログインした従業員を設定
+                    putSessionScope(AttributeConst.LOGIN_USE, uv);
 
                     //トップページにリダイレクト
                     redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
