@@ -17,17 +17,11 @@
             <c:if test="${errors != null}">
                 <div id="flush_error">
                     入力内容にエラーがあります。<br />
-                    <c:forEach var="error" items="${errors}">・<c:out value="${error}" />
-                        <br />
+                    <c:forEach var="error" items="${errors}">
+                        ・<c:out value="${error}" /><br />
                     </c:forEach>
+
                 </div>
-            </c:if>
-                <c:if test="${passChecks != null}">
-                    <c:forEach var="passCheck" items="${passChecks}">・<c:out value="${passCheck}" />
-                        <br />
-                    </c:forEach>
-
-
             </c:if>
             <label for="${AttributeConst.USE_NAME.getValue()}">名前</label><br />
             <input class="form-control" type="text" name="${AttributeConst.USE_NAME.getValue()}" value="${user.name}" />
@@ -42,8 +36,8 @@
             <input class="form-control" type="password" name="${AttributeConst.USE_PASS.getValue()}" />
             <br /><br />
 
-            <label for="${AttributeConst.USE_PASS_CONFIRMATION.getValue()}">パスワード(確認用)</label><br />
-            <input class="form-control" type="password" name="${AttributeConst.USE_PASS_CONFIRMATION.getValue()}" >
+            <label for="${AttributeConst.USE_REPASS.getValue()}">パスワード(確認用)</label><br />
+            <input class="form-control" type="password" name="${AttributeConst.USE_REPASS.getValue()}" >
             <br /><br />
 
 

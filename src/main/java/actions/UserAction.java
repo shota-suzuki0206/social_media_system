@@ -17,7 +17,7 @@ import services.UserService;
  * ユーザの関わる処理を行うActionクラス
  *
  */
-public class UserAction extends ActionBase{
+public class UserAction extends ActionBase {
 
     private UserService service;
 
@@ -25,7 +25,7 @@ public class UserAction extends ActionBase{
      * メソッドを実行する
      */
     @Override
-    public void process() throws ServletException, IOException{
+    public void process() throws ServletException, IOException {
 
         service = new UserService();
 
@@ -40,7 +40,7 @@ public class UserAction extends ActionBase{
      * @throws ServletException
      * @throws IOException
      */
-    public void index() throws ServletException, IOException{
+    public void index() throws ServletException, IOException {
 
         //指定されたページ数の一覧画面に表示するデータを取得
         int page = getPage();
@@ -49,10 +49,10 @@ public class UserAction extends ActionBase{
         //全てのユーザーデータの件数を取得
         long userCount = service.countAll();
 
-        putRequestScope(AttributeConst.USERS,users); //取得したユーザーデータ
-        putRequestScope(AttributeConst.USE_COUNT,userCount); //すべてのユーザーデータの件数
-        putRequestScope(AttributeConst.PAGE,page); //ページ数
-        putRequestScope(AttributeConst.MAX_ROW,JpaConst.ROW_PER_PAGE); //一ページに表示するレコードの数
+        putRequestScope(AttributeConst.USERS, users); //取得したユーザーデータ
+        putRequestScope(AttributeConst.USE_COUNT, userCount); //すべてのユーザーデータの件数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //一ページに表示するレコードの数
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
@@ -89,13 +89,6 @@ public class UserAction extends ActionBase{
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            String passCheck = null;
-
-            //パスワードの一致チェック
-            if(AttributeConst.USE_PASS.getValue() != AttributeConst.USE_PASS_CONFIRMATION.getValue()) {
-                passCheck ="パスワードとパスワード（確認用）が不一致です";
-            }
-
             //パラメータの値を元に従業員情報のインスタンスを作成する
             UserView uv = new UserView(
                     null,
@@ -106,32 +99,45 @@ public class UserAction extends ActionBase{
                     null,
                     AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
 
-            //アプリケーションスコープからpepper文字列を取得
-            String pepper = getContextScope(PropertyConst.PEPPER);
+            //パスワードの一致チェック
 
-            //ユーザー情報登録
-            List<String> errors = service.create(uv, pepper);
+            if (!getRequestParam(AttributeConst.USE_PASS).equals(getRequestParam(AttributeConst.USE_REPASS))) {
 
-
-            if (errors.size() > 0 && passCheck !=null) {
-                //登録中にエラーがあった場合
+                String errors = "パスワードとパスワード（確認）が不一致です。";
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.USER, uv); //入力されたユーザー情報
                 putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
-                putRequestScope(AttributeConst.PASSCHECK, passCheck); //エラーのリスト
 
                 //新規会員登録画面を再表示
                 forward(ForwardConst.FW_USE_NEW);
-
             } else {
-                //登録中にエラーがなかった場合
 
-                //セッションに登録完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+                //アプリケーションスコープからpepper文字列を取得
+                String pepper = getContextScope(PropertyConst.PEPPER);
 
-                //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_USE, ForwardConst.CMD_INDEX);
+                //ユーザー情報登録
+                List<String> errors = service.create(uv, pepper);
+
+                if (errors.size() > 0) {
+                    //登録中にエラーがあった場合
+
+                    putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                    putRequestScope(AttributeConst.USER, uv); //入力されたユーザー情報
+                    putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                    //新規会員登録画面を再表示
+                    forward(ForwardConst.FW_USE_NEW);
+
+                } else {
+                    //登録中にエラーがなかった場合
+
+                    //セッションに登録完了のフラッシュメッセージを設定
+                    putSessionScope(AttributeConst.FLUSH, MessageConst.I_MEMBER_REGISTERED.getMessage());
+
+                    //トップページにリダイレクト
+                    redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
+                }
             }
 
         }

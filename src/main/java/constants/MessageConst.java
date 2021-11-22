@@ -13,6 +13,7 @@ public enum MessageConst {
     I_LOGOUT("ログアウトしました。"),
 
     //DB更新
+    I_MEMBER_REGISTERED("会員登録が完了しました。"),
     I_REGISTERED("登録が完了しました。"),
     I_UPDATED("更新が完了しました。"),
     I_DELETED("削除が完了しました。"),
@@ -21,7 +22,6 @@ public enum MessageConst {
     E_NONAME("名前を入力してください"),
     E_NOEMAIL("メールアドレスを入力してください"),
     E_NOPASSWORD("パスワードを入力してください"),
-    E_NOCONFIRMATION("パスワードの確認欄も入力してください"),
     E_USE_EMAIL_EXIST("入力されたメールアドレスは既に登録されています"),
 
     E_NOTITLE("タイトルを入力してください"),
