@@ -17,6 +17,7 @@ public enum AttributeConst {
     //入力フォーム共通
     TOKEN("_token"),
     ERR("errors"),
+    PASSCHECK("passCheck"),
 
     //ログイン中のユーザー
     LOGIN_USE("login_user"),
@@ -32,6 +33,7 @@ public enum AttributeConst {
     USE_NAME("name"),
     USE_EMAIL("email"),
     USE_PASS("password"),
+    USE_PASS_CONFIRMATION("password_confirmation"),
 
     //削除フラグ
     DEL_FLAG_TRUE(1),
