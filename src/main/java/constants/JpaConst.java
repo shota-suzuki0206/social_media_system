@@ -52,9 +52,9 @@ public interface JpaConst {
     //全てのユーザーをidの降順に取得する
     String Q_USE_GET_ALL = ENTITY_USE + ".getAll"; //name
     String Q_USE_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id DESC"; //query
-    //全てのユーザーの件数を取得する
+    //削除されていないユーザーの件数を取得する
     String Q_USE_COUNT = ENTITY_USE + ".count";
-    String Q_USE_COUNT_DEF = "SELECT COUNT(u) FROM User AS u";
+    String Q_USE_COUNT_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.deleteFlag = 0";
     //emailとハッシュ化済パスワードを条件に未削除のユーザーを取得する
     String Q_USE_GET_BY_EMAIL_AND_PASS = ENTITY_USE + ".getByEmailAndPass";
     String Q_USE_GET_BY_EMAIL_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.deleteFlag = 0 AND u.email = :" + JPQL_PARM_EMAIL + " AND u.password = :" + JPQL_PARM_PASSWORD;

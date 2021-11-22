@@ -32,7 +32,7 @@ public class UserService extends ServiceBase {
     }
 
     /**
-     * ユーザーテーブルのデータの件数を取得し、返却する
+     * 未削除のユーザーテーブルのデータの件数を取得し、返却する
      * @return ユーザーテーブルのデータの件数
      */
     public long countAll() {

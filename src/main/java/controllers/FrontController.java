@@ -32,6 +32,7 @@ public class FrontController extends HttpServlet {
         //サーブレットコンテキスト、リクエスト、レスポンスをActionインスタンスのフィールドに設定
         action.init(getServletContext(), request, response);
 
+
         //Actionクラスの処理を呼び出し
         action.process();
 
@@ -61,7 +62,7 @@ public class FrontController extends HttpServlet {
             String actionString = request.getParameter(ForwardConst.ACT.getValue());
 
             //該当するActionオブジェクトを作成
-            type = Class.forName(String.format("action.%sAction", actionString));
+            type = Class.forName(String.format("actions.%sAction", actionString));
 
             //ActionBaseのオブジェクトにキャスト（例:actions.UserActionオブジェクト→action.ActionBaseオブジェクト）
             action = (ActionBase)(type.asSubclass(ActionBase.class)
