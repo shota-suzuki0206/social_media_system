@@ -28,7 +28,7 @@
             <div id="header_menu">
                 <h1><a href="<c:url value='?action=${actAuth}&command=${commShowIn}' />">会員制投稿サイト</a></h1>
             </div>
-            <div id="employee_name">
+            <div id="user_name">
                 <a href="<c:url value='?action=${actAuth}&command=${commShowIn}' />">ログイン</a>
             </div>
         </div>

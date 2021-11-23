@@ -27,7 +27,7 @@
                 <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">マイページ</a>&nbsp;
                 <a href="<c:url value='?action=${actUse}&command=${commIdx}' />">ユーザー一覧</a>&nbsp;
             </div>
-            <div id="employee_name">
+            <div id="user_name">
                 <c:out value="${sessionScope.login_user.name}" /> &nbsp;さん&nbsp;&nbsp;&nbsp;
                 <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>

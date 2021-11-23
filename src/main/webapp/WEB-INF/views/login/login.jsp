@@ -27,7 +27,7 @@
             <div id="header_menu">
                 <h1><a href="<c:url value='?action=${actUse}&command=${commNew}' />">会員制投稿サイト</a></h1>
             </div>
-            <div id="employee_name">
+            <div id="user_name">
                 <a href="<c:url value='?action=${actUse}&command=${commNew}' />">新規会員登録</a>
             </div>
         </div>
