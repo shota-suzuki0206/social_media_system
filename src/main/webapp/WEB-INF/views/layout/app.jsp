@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>
+
+<c:set var="actTop" value="${ForwardConst.ACT_TOP.getValue()}" />
+<c:set var="actUse" value="${ForwardConst.ACT_USE.getValue()}" />
+<c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
+
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -13,7 +23,13 @@
     <div id="wrapper">
         <div id="header">
             <div id="header_menu">
-                <h1>会員制投稿サイト</h1>
+                <h1><a href="<c:url value='/?action=${actTop}&command=${commIdx}' />">会員制投稿サイト</a></h1>&nbsp;&nbsp;&nbsp;
+                <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">マイページ</a>&nbsp;
+                <a href="<c:url value='?action=${actUse}&command=${commIdx}' />">ユーザー一覧</a>&nbsp;
+            </div>
+            <div id="employee_name">
+                <c:out value="${sessionScope.login_user.name}" /> &nbsp;さん&nbsp;&nbsp;&nbsp;
+                <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
         </div>
         <div id="content">${param.content}</div>
