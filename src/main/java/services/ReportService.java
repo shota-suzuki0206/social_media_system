@@ -23,7 +23,7 @@ public class ReportService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<ReportView> getMinePerPage(UserView user, int page){
+    public List<ReportView> getMinePerPage(UserView user, int page) {
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_MINE, Report.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
@@ -39,7 +39,7 @@ public class ReportService extends ServiceBase {
      * @return 投稿データの件数
      */
     public long countAllMine(UserView user) {
-        long count =(long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
+        long count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(user))
                 .getSingleResult();
 
@@ -51,7 +51,7 @@ public class ReportService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<ReportView> getAllPage(int page){
+    public List<ReportView> getAllPage(int page) {
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL, Report.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
@@ -65,7 +65,7 @@ public class ReportService extends ServiceBase {
      * @return データの件数
      */
     public long countAll() {
-        long reports_count = (long)em.createNamedQuery(JpaConst.Q_REP_COUNT, Long.class)
+        long reports_count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT, Long.class)
                 .getSingleResult();
         return reports_count;
     }
@@ -84,9 +84,9 @@ public class ReportService extends ServiceBase {
      * @param rv 投稿内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> create(ReportView rv){
+    public List<String> create(ReportView rv) {
         List<String> errors = ReportValidator.validate(rv);
-        if(errors.size() == 0) {
+        if (errors.size() == 0) {
             LocalDateTime ldt = LocalDateTime.now();
             rv.setCreatedAt(ldt);
             rv.setUpdatedAt(ldt);
@@ -94,7 +94,7 @@ public class ReportService extends ServiceBase {
 
         }
 
-      //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
         return errors;
     }
 
