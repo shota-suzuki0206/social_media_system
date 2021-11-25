@@ -103,7 +103,7 @@ public class UserAction extends ActionBase {
 
             if (!getRequestParam(AttributeConst.USE_PASS).equals(getRequestParam(AttributeConst.USE_REPASS))) {
 
-                String errors = "パスワードとパスワード（確認）が不一致です。";
+                String errors = "パスワードとパスワード（確認用）が不一致です。";
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.USER, uv); //入力されたユーザー情報

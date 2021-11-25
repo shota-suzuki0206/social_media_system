@@ -150,3 +150,8 @@ table#report_list .report_created_at {
 table#report_list .report_action {
     width: 13%;
 }
+
+h3 {
+    font-size: larger;
+}
+
