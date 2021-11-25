@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.AttributeConst"%>
 <%@ page import="constants.ForwardConst"%>
 
@@ -21,11 +22,12 @@
                     <th>登録日時</th>
                 </tr>
                 <c:forEach var="user" items="${users}" varStatus="status">
+                    <fmt:parseDate value="${user.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${user.id}" /></td>
                         <td><c:out value="${user.name}" /></td>
                         <td><c:out value="${user.email}" /></td>
-                        <td><c:out value="${user.createdAt}" /></td>
+                        <td><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
                     </tr>
                 </c:forEach>

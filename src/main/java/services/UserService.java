@@ -77,6 +77,7 @@ public class UserService extends ServiceBase {
         return UserConverter.toView(u);
     }
 
+
     /**
      *  メールアドレスを条件に該当するデータの件数を取得し、返却する
      * @param email メールアドレス
@@ -168,5 +169,7 @@ public class UserService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+
+
 
 }

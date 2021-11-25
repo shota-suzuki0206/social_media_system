@@ -132,10 +132,17 @@ public class UserAction extends ActionBase {
                 } else {
                     //登録中にエラーがなかった場合
 
+                    String email = getRequestParam(AttributeConst.USE_EMAIL);
+                    String plainPass = getRequestParam(AttributeConst.USE_PASS);
+                    String newPepper = getContextScope(PropertyConst.PEPPER);
+
+                    //登録した従業員のDBデータを取得
+                    UserView nuv = service.findOne(email, plainPass, newPepper);
+
                     //セッションに登録完了のフラッシュメッセージを設定
                     putSessionScope(AttributeConst.FLUSH, MessageConst.I_MEMBER_REGISTERED.getMessage());
                     //セッションにログインした従業員を設定
-                    putSessionScope(AttributeConst.LOGIN_USE, uv);
+                    putSessionScope(AttributeConst.LOGIN_USE, nuv);
 
                     //トップページにリダイレクト
                     redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
