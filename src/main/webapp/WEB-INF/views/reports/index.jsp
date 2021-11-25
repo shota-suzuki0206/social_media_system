@@ -16,11 +16,11 @@
                     <th class="report_action">操作</th>
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
-                    <fmt:parseDate value="${report.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createdAt" type="datetime" />
+                    <fmt:parseDate value="${report.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
                     <tr class="row${status.count % 2}">
                         <td class="report_name"><c:out value="${report.user.name}" /></td>
                         <td class="report_title">${report.title}</td>
-                        <td class="report_create_at"><fmt:formatDate value='${report.createdAt}' pattern="yyyy-MM-dd'T'HH:mm:ss" /></td>
+                        <td class="report_create_at"><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>

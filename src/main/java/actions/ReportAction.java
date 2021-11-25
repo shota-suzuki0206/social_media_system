@@ -10,6 +10,7 @@ import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.ReportService;
 
 /**
@@ -72,4 +73,51 @@ public class ReportAction extends ActionBase {
         forward(ForwardConst.FW_REP_NEW);
     }
 
+    /**
+     * 新規投稿登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+
+          //セッションからログイン中のユーザー情報を取得
+            UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
+            //パラメータの値をもとに日報情報のインスタンスを作成する
+            ReportView rv = new ReportView(
+                    null,
+                    uv, //ログインしている従業員を、日報作成者として登録する
+                    getRequestParam(AttributeConst.REP_TITLE),
+                    getRequestParam(AttributeConst.REP_CONTENT),
+                    null,
+                    null);
+
+            //日報情報登録
+            List<String> errors = service.create(rv);
+
+            if(errors.size() > 0) {
+                //登録中にエラーがあった場合
+
+                putRequestScope(AttributeConst.TOKEN,getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.REPORT, rv); //入力された投稿情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+               //新規投稿画面を再表示
+                forward(ForwardConst.FW_REP_NEW);
+
+            } else {
+                //登録中にエラーがなかった場合
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
+
+            }
+        }
+    }
 }

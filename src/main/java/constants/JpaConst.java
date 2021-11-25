@@ -51,7 +51,7 @@ public interface JpaConst {
     //NamedQueryの nameとquery
     //全てのユーザーをidの降順に取得する
     String Q_USE_GET_ALL = ENTITY_USE + ".getAll"; //name
-    String Q_USE_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id DESC"; //query
+    String Q_USE_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id"; //query
     //削除されていないユーザーの件数を取得する
     String Q_USE_COUNT = ENTITY_USE + ".count";
     String Q_USE_COUNT_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.deleteFlag = 0";
