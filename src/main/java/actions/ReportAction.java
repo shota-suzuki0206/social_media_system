@@ -24,11 +24,11 @@ public class ReportAction extends ActionBase {
      * メソッドを実行する
      */
     @Override
-    public void process() throws ServletException, IOException{
+    public void process() throws ServletException, IOException {
 
         service = new ReportService();
 
-      //メソッドを実行
+        //メソッドを実行
         invoke();
         service.close();
     }
@@ -36,7 +36,7 @@ public class ReportAction extends ActionBase {
     /**
      *自分の投稿一覧を表示する
      */
-    public void index() throws ServletException,IOException{
+    public void index() throws ServletException, IOException {
 
         //セッションからログイン中のユーザー情報を取得する
         UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
@@ -49,7 +49,7 @@ public class ReportAction extends ActionBase {
         long myReportsCount = service.countAllMine(loginUser);
 
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
-        putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ログイン中の従業員が作成した投稿の数
+        putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ログイン中のユーザーが作成した投稿の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -57,5 +57,19 @@ public class ReportAction extends ActionBase {
         forward(ForwardConst.FW_REP_INDEX);
     }
 
+    /**
+     * 新規投稿画面を表示する
+     */
+    public void entryNew() throws ServletException, IOException {
+
+        //CSRF対策用トークン
+        putRequestScope(AttributeConst.TOKEN, getTokenId());
+
+        //空の投稿インスタンス
+        putRequestScope(AttributeConst.REPORT, new ReportView());
+
+        //新規登録画面を表示
+        forward(ForwardConst.FW_REP_NEW);
+    }
 
 }

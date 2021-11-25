@@ -10,6 +10,8 @@
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
+<c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -25,6 +27,7 @@
             <div id="header_menu">
                 <h1><a href="<c:url value='/?action=${actTop}&command=${commIdx}' />">会員制投稿サイト</a></h1>&nbsp;&nbsp;&nbsp;
                 <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">マイページ</a>&nbsp;
+                <a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規投稿</a>&nbsp;
                 <a href="<c:url value='?action=${actUse}&command=${commIdx}' />">ユーザー一覧</a>&nbsp;
             </div>
             <div id="user_name">
