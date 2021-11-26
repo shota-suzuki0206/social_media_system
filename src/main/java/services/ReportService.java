@@ -122,6 +122,19 @@ public class ReportService extends ServiceBase {
     }
 
     /**
+     * idを条件にデータを1件物理削除する
+     */
+    public void destroy(int id)  {
+
+        Report r = findOneInternal(id);
+
+        em.getTransaction().begin();
+        em.remove(r);       // データ削除
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    /**
      * idを条件にデータを1件取得する
      * @param id
      * @return 取得データのインスタンス
@@ -154,5 +167,4 @@ public class ReportService extends ServiceBase {
         em.getTransaction().commit();
 
     }
-
 }
