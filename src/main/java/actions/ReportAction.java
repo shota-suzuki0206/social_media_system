@@ -83,7 +83,7 @@ public class ReportAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-          //セッションからログイン中のユーザー情報を取得
+            //セッションからログイン中のユーザー情報を取得
             UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
 
             //パラメータの値をもとに日報情報のインスタンスを作成する
@@ -98,14 +98,14 @@ public class ReportAction extends ActionBase {
             //日報情報登録
             List<String> errors = service.create(rv);
 
-            if(errors.size() > 0) {
+            if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
-                putRequestScope(AttributeConst.TOKEN,getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.REPORT, rv); //入力された投稿情報
                 putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
 
-               //新規投稿画面を再表示
+                //新規投稿画面を再表示
                 forward(ForwardConst.FW_REP_NEW);
 
             } else {
@@ -118,6 +118,29 @@ public class ReportAction extends ActionBase {
                 redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
 
             }
+        }
+    }
+
+    /**
+     * 詳細画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        //idを条件に投稿データを取得する
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        if (rv == null) {
+            //該当の投稿データが存在しない場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+
+        } else {
+
+            putRequestScope(AttributeConst.REPORT, rv); //取得した投稿データ
+
+            //詳細画面を表示
+            forward(ForwardConst.FW_REP_SHOW);
         }
     }
 }

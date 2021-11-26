@@ -3,6 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="constants.ForwardConst" %>
 
+<c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
+
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <h2><c:out value="${sessionScope.login_user.name}" />&nbsp;さんのマイページ</h2>
