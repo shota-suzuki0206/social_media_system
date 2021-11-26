@@ -66,13 +66,13 @@ public class UserConverter {
      * @return Viewモデルのリスト
      */
     public static List<UserView> toViewList(List<User>list){
-        List<UserView> uvs = new ArrayList<>();
+        List<UserView> evs = new ArrayList<>();
 
         for(User u : list) {
-            uvs.add(toView(u));
+            evs.add(toView(u));
         }
 
-        return uvs;
+        return evs;
     }
 
     /**

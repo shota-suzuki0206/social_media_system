@@ -6,7 +6,7 @@ package constants;
  */
 public interface JpaConst {
 
-  //persistence-unit名
+    //persistence-unit名
     String PERSISTENCE_UNIT_NAME = "social_media_system";
 
     //データ取得件数の最大値
@@ -15,7 +15,7 @@ public interface JpaConst {
     //ユーザーテーブル
     String TABLE_USE = "users"; //テーブル名
 
-    //従業員テーブルカラム
+    //ユーザーテーブルカラム
     String USE_COL_ID = "id"; //id
     String USE_COL_NAME = "name"; //名前
     String USE_COL_EMAIL = "email"; //メールアドレス
@@ -31,33 +31,46 @@ public interface JpaConst {
     String TABLE_REP = "reports";//テーブル名
 
     //投稿記事テーブルカラム
-    String REP_COL_ID ="id";//id
-    String REP_COL_USE ="user_id";//投稿したユーザーのid
+    String REP_COL_ID = "id";//id
+    String REP_COL_USE = "user_id";//投稿したユーザーのid
     String REP_COL_TITLE = "title";//投稿記事のタイトル
     String REP_COL_CONTENT = "content";//投稿記事の内容
     String REP_COL_CREATED_AT = "created_at";//登録日時
     String REP_COL_UPDATED_AT = "updated_at";//更新日時
 
+    //コメントテーブル
+    String TABLE_COM = "comments";//テーブル名
+
+    //投稿記事テーブルカラム
+    String COM_COL_ID = "id";//id
+    String COM_COL_USE = "user_id";//コメントしたユーザーのid
+    String COM_COL_REP = "report_id";//コメントした投稿id
+    String COM_COL_CONTENT = "content";//コメントの内容
+    String COM_COL_CREATED_AT = "created_at";//登録日時
+    String COM_COL_UPDATED_AT = "updated_at";//更新日時
+
     //Entity名
     String ENTITY_USE = "user"; //ユーザー
     String ENTITY_REP = "report"; //投稿記事
+    String ENTITY_COM = "comment"; //コメント
 
     //JPQL内パラメータ
     String JPQL_PARM_EMAIL = "email"; //メールアドレス
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_USER = "user"; //ユーザー
-
+    String JPQL_PARM_REPORT = "report"; //レポート
 
     //NamedQueryの nameとquery
-    //全てのユーザーをidの降順に取得する
+    //全ての削除されていないユーザーをidの昇順に取得する
     String Q_USE_GET_ALL = ENTITY_USE + ".getAll"; //name
-    String Q_USE_GET_ALL_DEF = "SELECT u FROM User AS u ORDER BY u.id"; //query
+    String Q_USE_GET_ALL_DEF = "SELECT u FROM User AS u WHERE u.deleteFlag = 0 ORDER BY u.id"; //query
     //削除されていないユーザーの件数を取得する
     String Q_USE_COUNT = ENTITY_USE + ".count";
     String Q_USE_COUNT_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.deleteFlag = 0";
     //emailとハッシュ化済パスワードを条件に未削除のユーザーを取得する
     String Q_USE_GET_BY_EMAIL_AND_PASS = ENTITY_USE + ".getByEmailAndPass";
-    String Q_USE_GET_BY_EMAIL_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.deleteFlag = 0 AND u.email = :" + JPQL_PARM_EMAIL + " AND u.password = :" + JPQL_PARM_PASSWORD;
+    String Q_USE_GET_BY_EMAIL_AND_PASS_DEF = "SELECT u FROM User AS u WHERE u.deleteFlag = 0 AND u.email = :"
+            + JPQL_PARM_EMAIL + " AND u.password = :" + JPQL_PARM_PASSWORD;
     //指定したemailを保持するユーザーの件数を取得する
     String Q_USE_COUNT_RESISTERED_BY_EMAIL = ENTITY_USE + ".countRegisteredByEmail";
     String Q_USE_COUNT_RESISTERED_BY_EMAIL_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.email = :" + JPQL_PARM_EMAIL;
@@ -70,11 +83,13 @@ public interface JpaConst {
     String Q_REP_COUNT_DEF = "SELECT COUNT(r) FROM Report AS r";
     //指定したユーザーが作成した投稿記事を全件idの降順で取得する
     String Q_REP_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
-    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.user = :" + JPQL_PARM_USER + " ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.user = :" + JPQL_PARM_USER
+            + " ORDER BY r.id DESC";
     //指定したユーザーが作成した投稿記事の件数を取得する
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.user = :" + JPQL_PARM_USER;
 
-
-
+    //指定した投稿へのコメントを全件idの昇順で取得する
+    String Q_COM_GET_ALL_MINE = ENTITY_COM + ".getAllMine";
+    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = : " + JPQL_PARM_REPORT + " ORDER BY c.id";
 }
