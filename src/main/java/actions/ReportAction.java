@@ -137,6 +137,7 @@ public class ReportAction extends ActionBase {
 
         } else {
 
+            putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.REPORT, rv); //取得した投稿データ
 
             //詳細画面を表示

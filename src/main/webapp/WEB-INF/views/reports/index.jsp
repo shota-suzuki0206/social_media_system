@@ -8,7 +8,7 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
-        <h2><c:out value="${sessionScope.login_user.name}" />&nbsp;さんのマイページ</h2>
+        <h2><c:out value="${sessionScope.login_user.name}" />&nbsp;さんのマイページ</h2><br />
         <h3><c:out value="${sessionScope.login_user.name}" />&nbsp;さんの投稿一覧</h3>
         <table id="report_list">
             <tbody>

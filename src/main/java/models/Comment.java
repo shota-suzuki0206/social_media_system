@@ -13,7 +13,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import constants.JpaConst;
@@ -30,7 +29,11 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(
             name =  JpaConst.Q_COM_GET_ALL_MINE,
-            query = JpaConst.Q_COM_GET_ALL_MINE_DEF)
+            query = JpaConst.Q_COM_GET_ALL_MINE_DEF),
+    @NamedQuery(
+            name =  JpaConst.Q_COM_COUNT_ALL_MINE,
+            query = JpaConst.Q_COM_COUNT_ALL_MINE_DEF)
+
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
@@ -58,7 +61,7 @@ public class Comment {
     /**
      * コメントをした投稿
      */
-    @OneToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = JpaConst.COM_COL_REP, nullable = false)
     private Report report;
 

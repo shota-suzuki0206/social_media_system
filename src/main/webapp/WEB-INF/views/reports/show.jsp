@@ -3,13 +3,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="constants.ForwardConst"%>
+<%@ page import="constants.AttributeConst"%>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actCom" value="${ForwardConst.ACT_COM.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
+
+    <c:if test="${errors != null}">
+        <div id="flush_error">
+            入力内容にエラーがあります。<br />
+            <c:forEach var="error" items="${errors}">
+                ・<c:out value="${error}" /><br />
+            </c:forEach>
+
+        </div>
+    </c:if>
         <h2>投稿 詳細ページ</h2>
 
         <table id="report_list">
@@ -18,8 +31,8 @@
                     <th class="show_name">名前</th>
                     <th class="show_title">タイトル</th>
                     <th class="show_content">内容</th>
-                    <th class="show_create_at">投稿日時</th>
-                    <th class="show_update_at">最終更新日時</th>
+                    <th class="show_created_at">投稿日時</th>
+                    <th class="show_updated_at">最終更新日時</th>
                 </tr>
                 <tr>
                     <td><c:out value="${report.user.name}" /></td>
@@ -40,6 +53,37 @@
                 <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この投稿を編集する</a>
             </p>
         </c:if>
+        <br /><br /><br />
 
+        <h3>コメント一覧</h3><br />
+
+        <form method="POST" action="<c:url value='/?action=${actCom}&command=${commCrt}' />">
+            <label for="${AttributeConst.COM_CONTENT.getValue()}">コメント</label><br />
+            <textarea name="${AttributeConst.COM_CONTENT.getValue()}" rows="3" cols="50">${comment.content}</textarea>
+            <br />
+
+            <input type="hidden" name="id" value="${report.id}">
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+            <button type="submit">投稿</button>
+            <br /><br />
+        </form>
+
+        <table id="comment_list">
+            <tbody>
+                <tr>
+                    <th class="commennt_name">名前</th>
+                    <th class="comment_content">内容</th>
+                    <th class="comment_create_at">投稿日時</th>
+                </tr>
+                <c:forEach var="comment" items="${comments}" varStatus="status">
+                    <fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="comCreate" type="date" />
+                    <tr class="row${status.count % 2}">
+                        <td><c:out value="${comment.user.name}" /></td>
+                        <td><pre><c:out value="${comment.content}" /></pre></td>
+                        <td><fmt:formatDate value="${comCreate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </c:param>
 </c:import>

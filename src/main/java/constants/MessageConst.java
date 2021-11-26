@@ -17,6 +17,7 @@ public enum MessageConst {
     I_REGISTERED("登録が完了しました。"),
     I_UPDATED("更新が完了しました。"),
     I_DELETED("削除が完了しました。"),
+    I_COM_REGISTERED("コメントを投稿しました。"),
 
     //バリデーション
     E_NONAME("名前を入力してください"),
@@ -25,7 +26,8 @@ public enum MessageConst {
     E_USE_EMAIL_EXIST("入力されたメールアドレスは既に登録されています"),
 
     E_NOTITLE("タイトルを入力してください"),
-    E_NOCONTENT("内容を入力してください");
+    E_NOCONTENT("内容を入力してください"),
+    E_NOCOMMENT("コメント内容を入力してください");
 
     /**
      * 文字列を保持するフィールド

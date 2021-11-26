@@ -44,7 +44,11 @@ public enum AttributeConst {
     REP_COUNT("reports_count"),
     REP_ID("id"),
     REP_TITLE("title"),
-    REP_CONTENT("content");
+    REP_CONTENT("content"),
+
+    //コメント管理
+    COMMENT("comment"),
+    COM_CONTENT("content");
 
     private final String text;
     private final Integer i;
