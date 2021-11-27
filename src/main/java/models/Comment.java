@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,14 +55,14 @@ public class Comment {
     /**
      * コメントを投稿したユーザー
      */
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = JpaConst.COM_COL_USE, nullable = false)
     private User user;
 
     /**
      * コメントをした投稿
      */
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = JpaConst.COM_COL_REP, nullable = false)
     private Report report;
 
