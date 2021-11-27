@@ -41,7 +41,7 @@ public interface JpaConst {
     //コメントテーブル
     String TABLE_COM = "comments";//テーブル名
 
-    //投稿記事テーブルカラム
+    //コメントテーブルカラム
     String COM_COL_ID = "id";//id
     String COM_COL_USE = "user_id";//コメントしたユーザーのid
     String COM_COL_REP = "report_id";//コメントした投稿id
@@ -49,10 +49,21 @@ public interface JpaConst {
     String COM_COL_CREATED_AT = "created_at";//登録日時
     String COM_COL_UPDATED_AT = "updated_at";//更新日時
 
+    //いいねテーブル
+    String TABLE_FAV = "favorites";//テーブル名
+
+    //いいねテーブルカラム
+    String FAV_COL_ID = "id";//id
+    String FAV_COL_USE = "user_id";//いいねしたユーザーのid
+    String FAV_COL_REP = "report_id";//いいねした投稿id
+    String FAV_COL_CREATED_AT = "created_at";//登録日時
+    String FAV_COL_UPDATED_AT = "updated_at";//更新日時
+
     //Entity名
     String ENTITY_USE = "user"; //ユーザー
     String ENTITY_REP = "report"; //投稿記事
     String ENTITY_COM = "comment"; //コメント
+    String ENTITY_FAV = "favorite"; //コメント
 
     //JPQL内パラメータ
     String JPQL_PARM_EMAIL = "email"; //メールアドレス
@@ -91,9 +102,13 @@ public interface JpaConst {
 
     //指定した投稿へのコメントを全件idの昇順で取得する
     String Q_COM_GET_ALL_MINE = ENTITY_COM + ".getAllMine";
-    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = : " + JPQL_PARM_REPORT + " ORDER BY c.id";
-  //指定した投稿へのコメントの件数を取得する
+    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = : " + JPQL_PARM_REPORT
+            + " ORDER BY c.id";
+    //指定した投稿へのコメントの件数を取得する
     String Q_COM_COUNT_ALL_MINE = ENTITY_COM + ".countAllMine";
     String Q_COM_COUNT_ALL_MINE_DEF = "SELECT COUNT(c) FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT;
 
+    //指定した投稿へのいいねの件数を取得する
+    String Q_FAV_COUNT_ALL_MINE = ENTITY_FAV + ".countAllMine";
+    String Q_FAV_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
 }

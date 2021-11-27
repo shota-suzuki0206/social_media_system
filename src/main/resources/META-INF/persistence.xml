@@ -5,6 +5,7 @@
         <class>models.User</class>
         <class>models.Report</class>
         <class>models.Comment</class>
+        <class>models.Favorite</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/social_media_system?useSSL=false&amp;allowPublicKeyRetrieval=true"/>
