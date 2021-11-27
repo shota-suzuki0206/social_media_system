@@ -6,4 +6,7 @@ package actions.views;
  */
 public class FavoriteConverter {
 
+    /**
+     * ViewモデルのインスタンスからDTOモデルのインスタンスを作成する
+     */
 }
