@@ -102,7 +102,7 @@ public interface JpaConst {
 
     //指定した投稿へのコメントを全件idの昇順で取得する
     String Q_COM_GET_ALL_MINE = ENTITY_COM + ".getAllMine";
-    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = : " + JPQL_PARM_REPORT
+    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT
             + " ORDER BY c.id";
     //指定した投稿へのコメントの件数を取得する
     String Q_COM_COUNT_ALL_MINE = ENTITY_COM + ".countAllMine";
