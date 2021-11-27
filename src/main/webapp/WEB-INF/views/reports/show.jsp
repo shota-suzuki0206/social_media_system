@@ -14,6 +14,12 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
 
+        <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}"></c:out>
+            </div>
+        </c:if>
+
     <c:if test="${errors != null}">
         <div id="flush_error">
             入力内容にエラーがあります。<br />
@@ -78,9 +84,9 @@
                 <c:forEach var="comment" items="${comments}" varStatus="status">
                     <fmt:parseDate value="${comment.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="comCreate" type="date" />
                     <tr class="row${status.count % 2}">
-                        <td><c:out value="${comment.user.name}" /></td>
-                        <td><pre><c:out value="${comment.content}" /></pre></td>
-                        <td><fmt:formatDate value="${comCreate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                        <td class="commennt_name"><c:out value="${comment.user.name}" /></td>
+                        <td class="comment_content"><pre><c:out value="${comment.content}" /></pre></td>
+                        <td class="comment_create_at"><fmt:formatDate value="${comCreate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     </tr>
                 </c:forEach>
             </tbody>

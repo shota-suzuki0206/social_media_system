@@ -71,7 +71,7 @@ public class CommentAction extends ActionBase {
                 //登録中にエラーがあった場合
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.COMMENT, cv); //入力された投稿情報
-                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+                putSessionScope(AttributeConst.ERR, errors); //エラーのリスト
 
                 //投稿詳細ページにリダイレクト
                 int id = toNumber(getRequestParam(AttributeConst.REP_ID));

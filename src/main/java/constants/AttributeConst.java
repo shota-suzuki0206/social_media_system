@@ -48,6 +48,8 @@ public enum AttributeConst {
 
     //コメント管理
     COMMENT("comment"),
+    COMMENTS("comments"),
+    COM_COUNT("comments_count"),
     COM_CONTENT("content");
 
     private final String text;

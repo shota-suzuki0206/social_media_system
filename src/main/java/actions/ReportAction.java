@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.CommentView;
 import actions.views.ReportView;
 import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import services.CommentService;
 import services.ReportService;
 
 /**
@@ -20,6 +22,7 @@ import services.ReportService;
 public class ReportAction extends ActionBase {
 
     private ReportService service;
+    private CommentService comService;
 
     /**
      * メソッドを実行する
@@ -28,10 +31,13 @@ public class ReportAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         service = new ReportService();
+        comService = new CommentService();
 
         //メソッドを実行
         invoke();
+
         service.close();
+        comService.close();
     }
 
     /**
@@ -137,6 +143,30 @@ public class ReportAction extends ActionBase {
 
         } else {
 
+            //投稿のコメントデータを取得する
+            int page = getPage();
+            List<CommentView> comments = comService.getMinePerPage(rv, page);
+
+            //コメントデータの件数を取得する。
+            long myCommentsCount = comService.countAllMine(rv);
+
+            //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+            String flush = getSessionScope(AttributeConst.FLUSH);
+            if (flush != null) {
+                putRequestScope(AttributeConst.FLUSH, flush);
+                removeSessionScope(AttributeConst.FLUSH);
+            }
+
+            //セッションにエラーメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
+            List<String> errors = getSessionScope(AttributeConst.ERR);
+            if (errors != null) {
+                putRequestScope(AttributeConst.ERR, errors);
+                removeSessionScope(AttributeConst.ERR);
+            }
+
+            putRequestScope(AttributeConst.COMMENTS, comments); //取得したコメントデータ
+            putRequestScope(AttributeConst.COM_COUNT, myCommentsCount); //コメントの数
+            putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.REPORT, rv); //取得した投稿データ
 
