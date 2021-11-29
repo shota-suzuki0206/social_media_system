@@ -59,11 +59,22 @@ public interface JpaConst {
     String FAV_COL_CREATED_AT = "created_at";//登録日時
     String FAV_COL_UPDATED_AT = "updated_at";//更新日時
 
+    //フォローテーブル
+    String TABLE_FLW = "follows";//テーブル名
+
+    //いいねテーブルカラム
+    String FLW_COL_ID = "id";//id
+    String FLW_COL_FOLLOW = "follow_id";//フォローしたユーザーのid
+    String FLW_COL_FOLLOWER = "follower_id";//フォローされたユーザーのid
+    String FLW_COL_CREATED_AT = "created_at";//登録日時
+    String FLW_COL_UPDATED_AT = "updated_at";//更新日時
+
     //Entity名
     String ENTITY_USE = "user"; //ユーザー
     String ENTITY_REP = "report"; //投稿記事
     String ENTITY_COM = "comment"; //コメント
     String ENTITY_FAV = "favorite"; //いいね！
+    String ENTITY_FLW = "follow"; //フォロー
 
     //JPQL内パラメータ
     String JPQL_PARM_EMAIL = "email"; //メールアドレス

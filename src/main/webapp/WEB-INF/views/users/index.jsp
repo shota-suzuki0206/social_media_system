@@ -12,7 +12,9 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
-          <h2>ユーザー一覧</h2>
+        <h2>ユーザー一覧</h2>
+
+        <br />ユーザー登録数: ${users_count} 人
         <table id="user_list">
             <tbody>
                 <tr>

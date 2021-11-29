@@ -18,6 +18,7 @@
         </c:if>
         <h2><c:out value="${sessionScope.login_user.name}" />&nbsp;さんのお気に入り投稿一覧</h2>
 
+        <br />お気に入り投稿件数: ${favorites_count} 件
         <c:choose>
             <c:when test="${favorites_count == 0}">
                 <br /><h3>お気に入り投稿はありません。</h3><br />
