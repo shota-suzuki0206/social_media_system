@@ -70,17 +70,22 @@
                 </tr>
             </tbody>
         </table><br />
-
+            <c:choose>
+                <c:when test="${favorite_flag == false }" >
                     <form action="<c:url value='?action=${actFav}&command=${commCrt}' />" method="POST">
                         <input type="hidden" name="id" value="${report.id}">
                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                         <input type="submit" value="いいね！">
                     </form>
+                </c:when>
+                <c:otherwise>
                     <form action="<c:url value='?action=${actFav}&command=${commDel}' />" method="POST">
                         <input type="hidden" name="id" value="${report.id}">
                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                         <input type="submit" value="いいね解除">
                     </form><br />
+                </c:otherwise>
+            </c:choose>
 
         <c:if test="${sessionScope.login_user.id == report.user.id}">
             <p>
