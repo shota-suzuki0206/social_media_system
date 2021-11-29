@@ -6,10 +6,12 @@
 <%@ page import="constants.AttributeConst"%>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actFav" value="${ForwardConst.ACT_FAV.getValue()}" />
 <c:set var="actCom" value="${ForwardConst.ACT_COM.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
+<c:set var="commDel" value="${ForwardConst.CMD_DESTROY.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -40,6 +42,8 @@
                     <th class="show_content">内容</th>
                     <th class="show_created_at">投稿日時</th>
                     <th class="show_updated_at">最終更新日時</th>
+                    <th class="show_favorite_count">いいねの数</th>
+                    <th class="show_favorite_list">いいねした人の一覧</th>
                 </tr>
                 <tr>
                     <td><c:out value="${report.user.name}" /></td>
@@ -55,9 +59,28 @@
                         pattern="yyyy-MM-dd'T'HH:mm:ss" var="updateDay" type="date" />
                     <td><fmt:formatDate value="${updateDay}"
                             pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <td><c:out value="${favorites_count}" />人</td>
+                    <td>
+                        <ul>
+                            <c:forEach var="favorite" items="${favorites}">
+                            <li><c:out value="${favorite.user.name}"/></li>
+                            </c:forEach>
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
-        </table>
+        </table><br />
+
+                    <form action="<c:url value='?action=${actFav}&command=${commCrt}' />" method="POST">
+                        <input type="hidden" name="id" value="${report.id}">
+                        <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                        <input type="submit" value="いいね！">
+                    </form>
+                    <form action="<c:url value='?action=${actFav}&command=${commDel}' />" method="POST">
+                        <input type="hidden" name="id" value="${report.id}">
+                        <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                        <input type="submit" value="いいね解除">
+                    </form><br />
 
         <c:if test="${sessionScope.login_user.id == report.user.id}">
             <p>
@@ -77,7 +100,7 @@
             <label for="${AttributeConst.COM_CONTENT.getValue()}">コメント</label><br />
             <textarea name="${AttributeConst.COM_CONTENT.getValue()}" rows="3"
                 cols="50">${comment.content}</textarea>
-            <br /> <input type="hidden" name="id" value="${report.id}">
+            <br /><input type="hidden" name="id" value="${report.id}">
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}"
                 value="${_token}" />
             <button type="submit">投稿</button>

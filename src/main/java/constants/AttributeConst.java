@@ -50,7 +50,13 @@ public enum AttributeConst {
     COMMENT("comment"),
     COMMENTS("comments"),
     COM_COUNT("comments_count"),
-    COM_CONTENT("content");
+    COM_CONTENT("content"),
+
+    //お気に入り管理
+    FAVORITE("favorite"),
+    FAVORITES("favorites"),
+    FAV_COUNT("favorites_count"),
+    FAV_FLAG("favorite_flag");
 
     private final String text;
     private final Integer i;

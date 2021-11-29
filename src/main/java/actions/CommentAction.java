@@ -66,6 +66,7 @@ public class CommentAction extends ActionBase {
             //日報情報登録
             List<String> errors = service.create(cv);
 
+
             if (errors.size() > 0) {
 
                 //登録中にエラーがあった場合

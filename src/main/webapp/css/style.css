@@ -165,11 +165,19 @@ table#report_list .show_content {
 }
 
 table#report_list .show_created_at {
-    width: 20%;
+    width: 15%;
 }
 
 table#report_list .show_updated_at {
-    width: 20%;
+    width: 15%;
+}
+
+table#report_list .show_favorite_count {
+    width: 13%;
+}
+
+table#report_list .show_favorite_list {
+    width: 15%;
 }
 
 h3 {

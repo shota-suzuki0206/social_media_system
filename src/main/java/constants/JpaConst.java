@@ -63,7 +63,7 @@ public interface JpaConst {
     String ENTITY_USE = "user"; //ユーザー
     String ENTITY_REP = "report"; //投稿記事
     String ENTITY_COM = "comment"; //コメント
-    String ENTITY_FAV = "favorite"; //コメント
+    String ENTITY_FAV = "favorite"; //いいね！
 
     //JPQL内パラメータ
     String JPQL_PARM_EMAIL = "email"; //メールアドレス
@@ -102,13 +102,29 @@ public interface JpaConst {
 
     //指定した投稿へのコメントを全件idの昇順で取得する
     String Q_COM_GET_ALL_MINE = ENTITY_COM + ".getAllMine";
-    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT
-            + " ORDER BY c.id";
+    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT+ " ORDER BY c.id";
     //指定した投稿へのコメントの件数を取得する
     String Q_COM_COUNT_ALL_MINE = ENTITY_COM + ".countAllMine";
     String Q_COM_COUNT_ALL_MINE_DEF = "SELECT COUNT(c) FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT;
 
-    //指定した投稿へのいいねの件数を取得する
+    //指定したユーザーがいいね！した投稿記事を全件idの降順で取得する
+    String Q_FAV_GET_ALL_MINE = ENTITY_FAV + ".getAllMine";
+    String Q_FAV_GET_ALL_MINE_DEF = "SELECT f FROM Favorite AS f WHERE f.user = :" + JPQL_PARM_USER +" ORDER BY f.id DESC";
+    //指定したユーザーがいいね！した投稿の件数を取得する
     String Q_FAV_COUNT_ALL_MINE = ENTITY_FAV + ".countAllMine";
-    String Q_FAV_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
+    String Q_FAV_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.user = :" + JPQL_PARM_USER;
+    //指定した投稿へのいいねの件数を取得する
+    String Q_FAV_COUNT = ENTITY_FAV + ".count";
+    String Q_FAV_COUNT_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
+    //ユーザーIDとレポートIDを条件にいいねデータを取得する
+    String Q_FAV_GET_BY_USEID_AND_REPID = ENTITY_FAV + ".getByUseIdAndRepId";
+    String Q_FAV_GET_BY_USEID_AND_REPID_DEF = "SELECT f FROM Favorite AS f WHERE f.user = :"+ JPQL_PARM_USER + " AND f.report = :" + JPQL_PARM_REPORT;
+    //指定した投稿にいいねしたユーザーの一覧を取得する
+    String Q_FAV_GET_BY_REP_ID = ENTITY_FAV + ".getByReportId";
+    String Q_FAV_GET_BY_REP_ID_DEF = "SELECT f FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
+    //ユーザーIDとレポートIDを条件に該当するいいねデータの件数を取得する
+    String Q_FAV_COUNT_BY_USEID_AND_REPID = ENTITY_FAV + ".countByUseIdAndRepId";
+    String Q_FAV_COUNT_BY_USEID_AND_REPID_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.user = :"+ JPQL_PARM_USER + " AND f.report = :" + JPQL_PARM_REPORT;
+
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 
 import actions.views.CommentView;
+import actions.views.FavoriteView;
 import actions.views.ReportView;
 import actions.views.UserView;
 import constants.AttributeConst;
@@ -13,6 +14,7 @@ import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import services.CommentService;
+import services.FavoriteService;
 import services.ReportService;
 
 /**
@@ -137,11 +139,26 @@ public class ReportAction extends ActionBase {
         //idを条件に投稿データを取得する
         ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
+        //セッションからログイン中の従業員情報を取得
+        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
         if (rv == null) {
             //該当の投稿データが存在しない場合はエラー画面を表示
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         } else {
+
+            //FavoriteServiceのインスタンスを作成
+            FavoriteService fs = new FavoriteService();
+
+            //ログインしているユーザーが投稿にいいねしているか判定
+            Boolean favorite_flag = fs.getFavoriteFlag(uv, rv);
+
+            //該当投稿にいいねしているユーザー情報一覧を取得
+            List<FavoriteView> favorites = fs.getFavoritesUser(rv);
+
+            // その投稿にいいねしている人数を取得
+            Integer favorites_count = favorites.size();
 
             //投稿のコメントデータを取得する
             int page = getPage();
@@ -167,6 +184,9 @@ public class ReportAction extends ActionBase {
             putRequestScope(AttributeConst.COMMENTS, comments); //取得したコメントデータ
             putRequestScope(AttributeConst.COM_COUNT, myCommentsCount); //コメントの数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
+            putRequestScope(AttributeConst.FAV_FLAG, favorite_flag);// すでにいいねしているかのフラグ
+            putRequestScope(AttributeConst.FAVORITES, favorites);// いいね一覧
+            putRequestScope(AttributeConst.FAV_COUNT, favorites_count);// いいね数
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
             putRequestScope(AttributeConst.REPORT, rv); //取得した投稿データ
 
