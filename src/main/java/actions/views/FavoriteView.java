@@ -25,7 +25,7 @@ public class FavoriteView {
     /**
      * いいねしたユーザーid
      */
-    private UserView employee;
+    private UserView user;
 
     /**
      * いいねされた投稿id

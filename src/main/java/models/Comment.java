@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import constants.JpaConst;
 import lombok.AllArgsConstructor;
@@ -55,14 +57,16 @@ public class Comment {
     /**
      * コメントを投稿したユーザー
      */
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne (cascade = CascadeType.MERGE)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name = JpaConst.COM_COL_USE, nullable = false)
     private User user;
 
     /**
      * コメントをした投稿
      */
-    @ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @OnDelete(action= OnDeleteAction.CASCADE)
     @JoinColumn(name = JpaConst.COM_COL_REP, nullable = false)
     private Report report;
 
