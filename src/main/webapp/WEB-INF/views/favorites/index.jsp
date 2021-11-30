@@ -36,28 +36,28 @@
                         <c:forEach var="favorite" items="${favorites}" varStatus="status">
                             <fmt:parseDate value="${favorite.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
                             <tr class="row${status.count % 2}">
-                                <td class="favorite_name"><c:out value="${favorite.report.user.name}" /></td>
-                                <td class="favorite_title">${favorite.report.title}</td>
-                                <td class="favorite_create_at"><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                                <td class="favorite_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${favorite.report.id}' />">詳細を見る</a></td>
+                                <td class="report_name"><c:out value="${favorite.report.user.name}" /></td>
+                                <td class="report_title">${favorite.report.title}</td>
+                                <td class="report_create_at"><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                                <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${favorite.report.id}' />">詳細を見る</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
+                <div id="pagination">
+                    （全 ${favorites_count} 件）<br />
+                    <c:forEach var="i" begin="1" end="${((favorites_count - 1) / maxRow) + 1}" step="1">
+                        <c:choose>
+                            <c:when test="${i == page}">
+                                <c:out value="${i}" />&nbsp;
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<c:url value='?action=${actFav}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </div>
             </c:otherwise>
         </c:choose>
-        <div id="pagination">
-            （全 ${favorites_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((favorites_count - 1) / maxRow) + 1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}">
-                        <c:out value="${i}" />&nbsp;
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='?action=${actFav}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div>
     </c:param>
 </c:import>

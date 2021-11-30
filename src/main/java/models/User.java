@@ -34,7 +34,7 @@ import lombok.Setter;
             query =JpaConst.Q_USE_GET_BY_EMAIL_AND_PASS_DEF),
     @NamedQuery(
             name =JpaConst.Q_USE_COUNT_RESISTERED_BY_EMAIL,
-            query =JpaConst.Q_USE_COUNT_RESISTERED_BY_EMAIL_DEF),
+            query =JpaConst.Q_USE_COUNT_RESISTERED_BY_EMAIL_DEF)
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)

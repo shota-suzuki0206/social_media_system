@@ -8,6 +8,7 @@
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="actAuth" value="${ForwardConst.ACT_AUTH.getValue()}" />
 <c:set var="actFav" value="${ForwardConst.ACT_FAV.getValue()}" />
+<c:set var="actFlw" value="${ForwardConst.ACT_FLW.getValue()}" />
 
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commOut" value="${ForwardConst.CMD_LOGOUT.getValue()}" />
@@ -31,6 +32,7 @@
                 <a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規投稿</a>&nbsp;
                 <a href="<c:url value='?action=${actFav}&command=${commIdx}&id=${login_user.id}' />">お気に入り投稿一覧</a>&nbsp;
                 <a href="<c:url value='?action=${actUse}&command=${commIdx}' />">ユーザー一覧</a>&nbsp;
+                <a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${login_user.id}' />">フォロー一覧</a>&nbsp;
             </div>
             <div id="user_name">
                 <c:out value="${sessionScope.login_user.name}" /> &nbsp;さん&nbsp;&nbsp;&nbsp;

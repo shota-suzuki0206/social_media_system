@@ -81,6 +81,8 @@ public interface JpaConst {
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_USER = "user"; //ユーザー
     String JPQL_PARM_REPORT = "report"; //レポート
+    String JPQL_PARM_FOLLOW = "follow"; //レポート
+    String JPQL_PARM_FOLLOWER = "follower"; //レポート
 
     //NamedQueryの nameとquery
     //全ての削除されていないユーザーをidの昇順に取得する
@@ -137,5 +139,11 @@ public interface JpaConst {
     String Q_FAV_COUNT_BY_USEID_AND_REPID = ENTITY_FAV + ".countByUseIdAndRepId";
     String Q_FAV_COUNT_BY_USEID_AND_REPID_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.user = :"+ JPQL_PARM_USER + " AND f.report = :" + JPQL_PARM_REPORT;
 
+    //指定したユーザーがフォローしたユーザーを全件idの降順で取得する
+    String Q_FLW_GET_ALL_MINE = ENTITY_FLW + ".getAllMine";
+    String Q_FLW_GET_ALL_MINE_DEF = "SELECT f FROM Follow AS f WHERE f.follow = :" + JPQL_PARM_FOLLOW + " ORDER BY f.id DESC";
+    //指定したユーザーがフォローした人数を取得する
+    String Q_FLW_COUNT_ALL_MINE = ENTITY_FLW + ".countAllMine";
+    String Q_FLW_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :" + JPQL_PARM_FOLLOW;
 
 }
