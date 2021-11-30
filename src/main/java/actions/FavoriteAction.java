@@ -14,6 +14,7 @@ import constants.JpaConst;
 import constants.MessageConst;
 import services.FavoriteService;
 import services.ReportService;
+import services.UserService;
 
 /**
  * いいね！に関する操作を行うActionクラス
@@ -22,6 +23,7 @@ import services.ReportService;
 public class FavoriteAction extends ActionBase{
 
     private FavoriteService service;
+    private UserService useService;
 
     /**
      * メソッドを実行する
@@ -30,10 +32,12 @@ public class FavoriteAction extends ActionBase{
     public void process() throws ServletException, IOException {
 
         service = new FavoriteService();
+        useService = new UserService();
 
         //メソッドを実行
         invoke();
 
+        useService.close();
         service.close();
     }
 
@@ -42,18 +46,19 @@ public class FavoriteAction extends ActionBase{
      */
     public void index() throws ServletException, IOException{
 
-        //セッションからログイン中のユーザー情報を取得
-        UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+        //セッションからユーザー情報を取得
+        UserView uv = useService.findOne(toNumber(getRequestParam(AttributeConst.USE_ID)));
 
-        //ログイン中のユーザーがいいね！した投稿を、指定されたページ数の一覧画面に表示する分取得する
+        //取得したユーザーがいいね！した投稿を、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();
-        List<FavoriteView> favorites = service.getMinePerPage(loginUser, page);
+        List<FavoriteView> favorites = service.getMinePerPage(uv, page);
 
-        //ログイン中のユーザーがいいね！した投稿データの件数を取得
-        long myFavoritesCount = service.countAllMine(loginUser);
+        //ユーザーがいいね！した投稿データの件数を取得
+        long favoritesCount = service.countAllMine(uv);
 
+        putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.FAVORITES, favorites); //取得したいいねデータ
-        putRequestScope(AttributeConst.FAV_COUNT, myFavoritesCount); //ログイン中のユーザーがいいね！した投稿の数
+        putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 

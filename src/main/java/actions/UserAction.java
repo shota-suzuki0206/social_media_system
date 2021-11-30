@@ -12,6 +12,7 @@ import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import constants.PropertyConst;
+import services.FavoriteService;
 import services.ReportService;
 import services.UserService;
 
@@ -23,6 +24,7 @@ public class UserAction extends ActionBase {
 
     private UserService service;
     private ReportService repService;
+    private FavoriteService favService;
 
     /**
      * メソッドを実行する
@@ -32,10 +34,12 @@ public class UserAction extends ActionBase {
 
         service = new UserService();
         repService = new ReportService();
+        favService = new FavoriteService();
 
         //メソッドを実行
         invoke();
 
+        favService.close();
         repService.close();
         service.close();
     }
@@ -179,6 +183,10 @@ public class UserAction extends ActionBase {
         //対象のユーザーが作成した投稿データの件数を取得する。
         long myReportsCount = repService.countAllMine(uv);
 
+        //いいねした投稿の件数をユーザーIDを使って取得する
+        long favoritesCount = favService.countAllMine(uv);
+
+        putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
         putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ユーザーが作成した投稿の数

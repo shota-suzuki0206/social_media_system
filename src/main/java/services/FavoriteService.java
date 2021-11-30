@@ -21,7 +21,7 @@ import models.User;
 public class FavoriteService extends ServiceBase {
 
     /**
-     * ログイン中のユーザーがいいね！した投稿の一覧を取得
+     * 指定したユーザーがいいね！した投稿の一覧を取得
      * @param user ログイン中ユーザー
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
@@ -36,7 +36,7 @@ public class FavoriteService extends ServiceBase {
     }
 
     /**
-     * ログイン中のユーザーがいいね！した投稿の件数を取得し、返却する
+     * 指定したユーザーがいいね！した投稿の件数を取得し、返却する
      * @param user
      * @return 投稿データの件数
      */
