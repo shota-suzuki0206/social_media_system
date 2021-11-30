@@ -18,19 +18,20 @@
         <table id="user_list">
             <tbody>
                 <tr>
-                    <th>ID</th>
-                    <th>名前</th>
-                    <th>メールアドレス</th>
-                    <th>登録日時</th>
+                    <th class="user_id">ID</th>
+                    <th class="user_name">名前</th>
+                    <th class="user_email">メールアドレス</th>
+                    <th class="user_create_at">登録日時</th>
+                    <th class="user_action">操作</th>
                 </tr>
                 <c:forEach var="user" items="${users}" varStatus="status">
                     <fmt:parseDate value="${user.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
                     <tr class="row${status.count % 2}">
-                        <td><c:out value="${user.id}" /></td>
-                        <td><c:out value="${user.name}" /></td>
-                        <td><c:out value="${user.email}" /></td>
-                        <td><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
-
+                        <td class="user_id"><c:out value="${user.id}" /></td>
+                        <td class="user_name"><c:out value="${user.name}" /></td>
+                        <td class="user_email"><c:out value="${user.email}" /></td>
+                        <td class="user_create_at"><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                        <td class="user_action"><a href="<c:url value='?action=${actUse}&command=${commShow}&id=${user.id}' />">詳細画面へ移動</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.ReportView;
 import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import constants.PropertyConst;
+import services.ReportService;
 import services.UserService;
 
 /**
@@ -20,6 +22,7 @@ import services.UserService;
 public class UserAction extends ActionBase {
 
     private UserService service;
+    private ReportService repService;
 
     /**
      * メソッドを実行する
@@ -28,10 +31,12 @@ public class UserAction extends ActionBase {
     public void process() throws ServletException, IOException {
 
         service = new UserService();
+        repService = new ReportService();
 
         //メソッドを実行
         invoke();
 
+        repService.close();
         service.close();
     }
 
@@ -150,5 +155,37 @@ public class UserAction extends ActionBase {
             }
 
         }
+    }
+
+    /**
+     *詳細画面を表示する
+     */
+    public void show() throws ServletException, IOException {
+
+        //idを条件にユーザーデータを取得する
+        UserView uv = service.findOne(toNumber(getRequestParam(AttributeConst.USE_ID)));
+
+        if (uv == null || uv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        //対象のユーザーが作成した投稿データを、指定されたページ数の一覧画面に表示する分取得する
+        int page = getPage();
+        List<ReportView> reports = repService.getMinePerPage(uv, page);
+
+        //対象のユーザーが作成した投稿データの件数を取得する。
+        long myReportsCount = repService.countAllMine(uv);
+
+        putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
+        putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
+        putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ユーザーが作成した投稿の数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+        //一覧画面を表示
+        forward(ForwardConst.FW_USE_SHOW);
     }
 }

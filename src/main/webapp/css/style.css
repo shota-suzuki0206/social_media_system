@@ -140,11 +140,11 @@ table#report_list .report_name {
     padding: 10px 2%;
 }
 table#report_list .report_title {
-    width: 37
+    width: 37%;
 }
 
 table#report_list .report_created_at {
-    width: 20
+    width: 20%;
 }
 
 table#report_list .report_action {
@@ -179,6 +179,27 @@ table#report_list .show_favorite_count {
 table#report_list .show_favorite_list {
     width: 15%;
 }
+
+table#user_list .user_id {
+    width: 10%;
+    padding: 10px 2%;
+}
+table#user_list .user_name {
+    width: 20%;
+}
+
+table#user_list .user_email {
+    width: 25%;
+}
+
+table#user_list .user_create_at {
+    width: 25%;
+}
+
+table#user_list .user_action {
+    width: 20%;
+}
+
 
 h3 {
     font-size: larger;
