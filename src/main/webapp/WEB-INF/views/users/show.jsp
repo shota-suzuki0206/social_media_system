@@ -40,7 +40,7 @@
 
         <div class="my_page_list">
             <p><a href="<c:url value='?action=${actFav}&command=${commIdx}&id=${user.id}' />">お気に入り投稿一覧(${favorites_count}件)</a></p>
-            <p><a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${user.id}' />">フォロー一覧</a></p>
+            <p><a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${user.id}' />">フォロー一覧(${follows_count}人)</a></p>
             <p>フォロワー一覧</p>
         </div>
 

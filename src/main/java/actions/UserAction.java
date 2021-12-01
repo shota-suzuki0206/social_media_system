@@ -196,6 +196,9 @@ public class UserAction extends ActionBase {
         //ログインしているユーザーが詳細画面を開いたユーザーをフォローしているか判定
         Boolean follow_flag = flwService.getFollowFlag(uv, loginUser);
 
+        //対象のユーザーがフォローした人数を取得
+        long followsCount = flwService.countAllMine(uv);
+
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
         if (flush != null) {
@@ -203,8 +206,9 @@ public class UserAction extends ActionBase {
             removeSessionScope(AttributeConst.FLUSH);
         }
 
-        putSessionScope(AttributeConst.USE_ID, uv.getId()); //詳細画面を開いたユーザーのidをセッションスコープに登録する
+        putSessionScope(AttributeConst.USE_ID, uv.getId()); //対象のユーザーのidをセッションスコープに登録する
         putRequestScope(AttributeConst.FLW_FLAG, follow_flag);// すでにいいねしているかのフラグ
+        putRequestScope(AttributeConst.FLW_COUNT, followsCount); //ユーザーがフォローした人数
         putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
