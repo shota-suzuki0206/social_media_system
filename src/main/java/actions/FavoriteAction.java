@@ -89,8 +89,15 @@ public class FavoriteAction extends ActionBase{
             //ReportServiceインスタンスを生成
             ReportService rs = new ReportService();
 
+
+            //セッションスコープから投稿idを取得
+            Integer id = getSessionScope(AttributeConst.REP_ID);
+
             // idを条件に投稿データを取得する
-            ReportView rv = rs.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+            ReportView rv = rs.findOne(id);
+
+            //セッションスコープから投稿idを消去
+            removeSessionScope(AttributeConst.REP_ID);
 
             //パラメータの値をもとにいいね情報のインスタンスを作成する
             FavoriteView fv = new FavoriteView(
@@ -107,7 +114,6 @@ public class FavoriteAction extends ActionBase{
             putSessionScope(AttributeConst.FLUSH, MessageConst.I_FAV_REGISTERED.getMessage());
 
             //投稿詳細ページにリダイレクト
-            int id = toNumber(getRequestParam(AttributeConst.REP_ID));
             redirect(ForwardConst.ACT_REP, ForwardConst.CMD_SHOW, id);
         }
     }
@@ -129,8 +135,14 @@ public class FavoriteAction extends ActionBase{
             //ReportServiceインスタンスを生成
             ReportService rs = new ReportService();
 
+            //セッションスコープから投稿idを取得
+            Integer id = getSessionScope(AttributeConst.REP_ID);
+
             // idを条件に投稿データを取得する
-            ReportView rv = rs.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+            ReportView rv = rs.findOne(id);
+
+            //セッションスコープから投稿idを消去
+            removeSessionScope(AttributeConst.REP_ID);
 
             //いいねデータを削除する
             service.destroy(rv, uv);
@@ -140,7 +152,6 @@ public class FavoriteAction extends ActionBase{
 
 
             //投稿詳細ページにリダイレクト
-            int id = toNumber(getRequestParam(AttributeConst.REP_ID));
             redirect(ForwardConst.ACT_REP, ForwardConst.CMD_SHOW, id);
 
         }

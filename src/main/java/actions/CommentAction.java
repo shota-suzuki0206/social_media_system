@@ -48,8 +48,14 @@ public class CommentAction extends ActionBase {
             // ReportServiceインスタンスを生成
             ReportService rs = new ReportService();
 
+            //セッションスコープから投稿idを取得
+            Integer id = getSessionScope(AttributeConst.REP_ID);
+
             // idを条件に日報データを取得する
-            ReportView rv = rs.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+            ReportView rv = rs.findOne(id);
+
+            //セッションスコープから投稿idを消去
+            removeSessionScope(AttributeConst.REP_ID);
 
             //セッションからログイン中のユーザー情報を取得
             UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
@@ -75,7 +81,6 @@ public class CommentAction extends ActionBase {
                 putSessionScope(AttributeConst.ERR, errors); //エラーのリスト
 
                 //投稿詳細ページにリダイレクト
-                int id = toNumber(getRequestParam(AttributeConst.REP_ID));
                 redirect(ForwardConst.ACT_REP, ForwardConst.CMD_SHOW, id);
 
             } else {
@@ -87,7 +92,6 @@ public class CommentAction extends ActionBase {
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
 
                 //投稿詳細ページにリダイレクト
-                int id = toNumber(getRequestParam(AttributeConst.REP_ID));
                 redirect(ForwardConst.ACT_REP, ForwardConst.CMD_SHOW, id);
 
             }

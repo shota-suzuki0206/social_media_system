@@ -73,14 +73,12 @@
             <c:choose>
                 <c:when test="${favorite_flag == false }" >
                     <form action="<c:url value='?action=${actFav}&command=${commCrt}' />" method="POST">
-                        <input type="hidden" name="id" value="${report.id}">
                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                         <input type="submit" value="いいね！">
                     </form>
                 </c:when>
                 <c:otherwise>
                     <form action="<c:url value='?action=${actFav}&command=${commDel}' />" method="POST">
-                        <input type="hidden" name="id" value="${report.id}">
                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
                         <input type="submit" value="いいね解除">
                     </form><br />
@@ -105,7 +103,7 @@
             <label for="${AttributeConst.COM_CONTENT.getValue()}">コメント</label><br />
             <textarea name="${AttributeConst.COM_CONTENT.getValue()}" rows="3"
                 cols="50">${comment.content}</textarea>
-            <br /><input type="hidden" name="id" value="${report.id}">
+            <br />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}"
                 value="${_token}" />
             <button type="submit">投稿</button>

@@ -157,6 +157,7 @@ public class ReportAction extends ActionBase {
                 removeSessionScope(AttributeConst.ERR);
             }
 
+            putSessionScope(AttributeConst.REP_ID,rv.getId());//レポートIDをセッションスコープに登録
             putRequestScope(AttributeConst.COMMENTS, comments); //取得したコメントデータ
             putRequestScope(AttributeConst.COM_COUNT, myCommentsCount); //コメントの数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
