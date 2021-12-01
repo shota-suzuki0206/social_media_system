@@ -30,7 +30,10 @@ import lombok.Setter;
             query = JpaConst.Q_FLW_GET_ALL_MINE_DEF),
     @NamedQuery(
             name =  JpaConst.Q_FLW_COUNT_ALL_MINE,
-            query = JpaConst.Q_FLW_COUNT_ALL_MINE_DEF)
+            query = JpaConst.Q_FLW_COUNT_ALL_MINE_DEF),
+    @NamedQuery(
+            name =  JpaConst.Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER,
+            query = JpaConst.Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER_DEF)
 
 })
 

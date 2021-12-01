@@ -68,7 +68,7 @@ public class FollowAction extends ActionBase {
      */
     public void create() throws ServletException, IOException{
 
-        //CSRF対策 tokenのチェック
+        //CSRF対策_tokenのチェック
         if(checkToken()) {
 
             //セッションからログイン中のユーザー情報を取得
@@ -96,6 +96,39 @@ public class FollowAction extends ActionBase {
 
             //セッションに登録完了のフラッシュメッセージを登録
             putSessionScope(AttributeConst.FLUSH, MessageConst.I_FLW_REGISTERED.getMessage());
+
+            //ユーザー詳細ページにリダイレクト
+            redirect(ForwardConst.ACT_USE, ForwardConst.CMD_SHOW, id);
+        }
+    }
+
+    /**
+     * フォロー削除を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void destroy() throws ServletException, IOException {
+
+        //CSRF対策_tokenのチェック
+        if(checkToken()) {
+
+            //セッションからログイン中のユーザー情報を取得
+            UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
+            //セッションから詳細画面を開いたユーザーのidを取得
+            Integer id = getSessionScope(AttributeConst.USE_ID);
+
+            //idを条件にユーザー情報を取得する
+            UserView flw = useService.findOne(id);
+
+            //セッションスコープからユーザーidを消去
+            removeSessionScope(AttributeConst.USE_ID);
+
+            //フォローデータを削除する
+            service.destroy(uv, flw);
+
+            //セッションにフォロー解除のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_FLW_DELETED.getMessage());
 
             //ユーザー詳細ページにリダイレクト
             redirect(ForwardConst.ACT_USE, ForwardConst.CMD_SHOW, id);

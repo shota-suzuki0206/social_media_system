@@ -15,6 +15,12 @@
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
+        <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}"></c:out>
+            </div>
+        </c:if>
+
         <h2><c:out value="${user.name}" />&nbsp;さんのマイページ</h2><br />
 
         <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">

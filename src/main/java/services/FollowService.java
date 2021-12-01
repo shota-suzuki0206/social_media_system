@@ -59,7 +59,7 @@ public class FollowService extends ServiceBase {
     }
 
     /**
-     * いいねデータを1件登録する
+     * フォローデータを1件登録する
      * @param fv FollowViewインスタンス
      */
     private void createInternal(FollowView fv) {
@@ -68,5 +68,24 @@ public class FollowService extends ServiceBase {
         em.persist(FollowConverter.toModel(fv));
         em.getTransaction().commit();
 
+    }
+
+    /**
+     * フォローデータを削除する
+     * @param uv ログイン中のユーザー情報
+     * @param flw フォローしているユーザー情報
+     */
+    public void destroy(UserView uv, UserView flw) {
+
+        //フォローid,フォロワーidを条件にデータを取得
+        Follow f = em.createNamedQuery(JpaConst.Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW, UserConverter.toModel(uv))
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, UserConverter.toModel(flw))
+                .getSingleResult();
+
+        em.getTransaction().begin();
+        em.remove(f); // フォローデータ削除
+        em.getTransaction().commit();
+        em.close();
     }
 }

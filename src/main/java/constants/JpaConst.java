@@ -145,5 +145,8 @@ public interface JpaConst {
     //指定したユーザーがフォローした人数を取得する
     String Q_FLW_COUNT_ALL_MINE = ENTITY_FLW + ".countAllMine";
     String Q_FLW_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :" + JPQL_PARM_FOLLOW;
+    //フォローIDとフォロワーIDを条件に該当するフォローデータを取得する
+    String Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER = ENTITY_FLW + ".getByFollowAndFollower";
+    String Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER_DEF = "SELECT f FROM Follow AS f WHERE f.follow = :"+ JPQL_PARM_FOLLOW + " AND f.follower = :" + JPQL_PARM_FOLLOWER;
 
 }
