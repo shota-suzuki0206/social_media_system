@@ -29,13 +29,13 @@
                     <th class="user_action">操作</th>
                 </tr>
                 <c:forEach var="follow" items="${follows}" varStatus="status">
-                    <fmt:parseDate value="${user.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
+                    <fmt:parseDate value="${follow.follower.createdAt}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
                     <tr class="row${status.count % 2}">
-                        <td class="user_id"><c:out value="${user.id}" /></td>
-                        <td class="user_name"><c:out value="${user.name}" /></td>
-                        <td class="user_email"><c:out value="${user.email}" /></td>
+                        <td class="user_id"><c:out value="${follow.follower.id}" /></td>
+                        <td class="user_name"><c:out value="${follow.follower.name}" /></td>
+                        <td class="user_email"><c:out value="${follow.follower.email}" /></td>
                         <td class="user_create_at"><fmt:formatDate value='${createDay}' pattern="yyyy-MM-dd HH:mm:ss" /></td>
-                        <td class="user_action"><a href="<c:url value='?action=${actUse}&command=${commShow}&id=${user.id}' />">詳細画面へ移動</a></td>
+                        <td class="user_action"><a href="<c:url value='?action=${actUse}&command=${commShow}&id=${follow.follower.id}' />">詳細画面へ移動</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

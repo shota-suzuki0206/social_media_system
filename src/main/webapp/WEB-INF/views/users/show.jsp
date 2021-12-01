@@ -23,14 +23,20 @@
 
         <h2><c:out value="${user.name}" />&nbsp;さんのマイページ</h2><br />
 
-        <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">
-            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-            <input type="submit" value="フォロー">
-        </form>
-        <form action="<c:url value='?action=${actFlw}&command=${commDel}' />" method="POST">
-            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-            <input type="submit" value="フォロー解除">
-        </form>
+        <c:choose>
+            <c:when test="${follow_flag == false}" >
+                <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">
+                    <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                    <input type="submit" value="フォロー">
+                </form>
+            </c:when>
+            <c:otherwise>
+                <form action="<c:url value='?action=${actFlw}&command=${commDel}' />" method="POST">
+                    <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                    <input type="submit" value="フォロー解除">
+                </form>
+            </c:otherwise>
+        </c:choose>
 
         <div class="my_page_list">
             <p><a href="<c:url value='?action=${actFav}&command=${commIdx}&id=${user.id}' />">お気に入り投稿一覧(${favorites_count}件)</a></p>

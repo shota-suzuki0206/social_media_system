@@ -13,6 +13,7 @@ import constants.JpaConst;
 import constants.MessageConst;
 import constants.PropertyConst;
 import services.FavoriteService;
+import services.FollowService;
 import services.ReportService;
 import services.UserService;
 
@@ -25,6 +26,7 @@ public class UserAction extends ActionBase {
     private UserService service;
     private ReportService repService;
     private FavoriteService favService;
+    private FollowService flwService;
 
     /**
      * メソッドを実行する
@@ -35,10 +37,12 @@ public class UserAction extends ActionBase {
         service = new UserService();
         repService = new ReportService();
         favService = new FavoriteService();
+        flwService = new FollowService();
 
         //メソッドを実行
         invoke();
 
+        flwService.close();
         favService.close();
         repService.close();
         service.close();
@@ -186,6 +190,12 @@ public class UserAction extends ActionBase {
         //いいねした投稿の件数をユーザーIDを使って取得する
         long favoritesCount = favService.countAllMine(uv);
 
+        //セッションからログイン中の従業員情報を取得
+        UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
+        //ログインしているユーザーが詳細画面を開いたユーザーをフォローしているか判定
+        Boolean follow_flag = flwService.getFollowFlag(uv, loginUser);
+
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
         if (flush != null) {
@@ -194,6 +204,7 @@ public class UserAction extends ActionBase {
         }
 
         putSessionScope(AttributeConst.USE_ID, uv.getId()); //詳細画面を開いたユーザーのidをセッションスコープに登録する
+        putRequestScope(AttributeConst.FLW_FLAG, follow_flag);// すでにいいねしているかのフラグ
         putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ

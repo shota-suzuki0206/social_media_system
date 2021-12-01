@@ -61,7 +61,8 @@ public enum AttributeConst {
     //お気に入り管理
     FOLLOW("follow"),
     FOLLOWS("follows"),
-    FLW_COUNT("follows_count");
+    FLW_COUNT("follows_count"),
+    FLW_FLAG("follow_flag");
 
     private final String text;
     private final Integer i;

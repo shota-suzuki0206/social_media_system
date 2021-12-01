@@ -88,4 +88,34 @@ public class FollowService extends ServiceBase {
         em.getTransaction().commit();
         em.close();
     }
+
+
+    /**
+     * ログインユーザーが、該当ユーザーをフォローしているか判定
+     * @param uv 該当ユーザー
+     * @param loginUser ログインしている
+     * @return true フォローしている
+     * @return false フォローしていない
+     */
+    public Boolean getFollowFlag(UserView uv, UserView loginUser) {
+
+        //変換した値を元に該当するフォローデータがあるか検索する
+        long count = em.createNamedQuery(JpaConst.Q_FLW_COUNT_BY_FOLLOW_AND_FOLLOWER, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW,UserConverter.toModel(loginUser))
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, UserConverter.toModel(uv))
+                .getSingleResult();
+
+        if (count == 0) {
+
+            //フォローしてない場合falseで返す
+            return false;
+
+
+        } else {
+
+            //フォローしている場合trueで返す
+            return true;
+
+        }
+    }
 }
