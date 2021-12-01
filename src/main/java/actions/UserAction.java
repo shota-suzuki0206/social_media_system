@@ -186,12 +186,14 @@ public class UserAction extends ActionBase {
         //いいねした投稿の件数をユーザーIDを使って取得する
         long favoritesCount = favService.countAllMine(uv);
 
+        putSessionScope(AttributeConst.USE_ID, uv.getId()); //詳細画面を開いたユーザーのidをセッションスコープに登録する
         putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
         putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ユーザーが作成した投稿の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
 
         //一覧画面を表示
         forward(ForwardConst.FW_USE_SHOW);

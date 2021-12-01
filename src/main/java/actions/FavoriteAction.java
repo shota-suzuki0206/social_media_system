@@ -110,7 +110,7 @@ public class FavoriteAction extends ActionBase{
             //いいね情報登録
             service.create(fv);
 
-            //セッションに登録完了のフラッシュメッセージを設定
+            //セッションにいいね！完了のフラッシュメッセージを設定
             putSessionScope(AttributeConst.FLUSH, MessageConst.I_FAV_REGISTERED.getMessage());
 
             //投稿詳細ページにリダイレクト
@@ -147,7 +147,7 @@ public class FavoriteAction extends ActionBase{
             //いいねデータを削除する
             service.destroy(rv, uv);
 
-            //セッションに削除完了のフラッシュメッセージを設定
+            //セッションにいいね削除完了のフラッシュメッセージを設定
             putSessionScope(AttributeConst.FLUSH, MessageConst.I_FAV_DELETED.getMessage());
 
 

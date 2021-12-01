@@ -95,7 +95,7 @@ public class ReportAction extends ActionBase {
             } else {
                 //登録中にエラーがなかった場合
 
-                //セッションに登録完了のフラッシュメッセージを設定
+                //セッションに投稿完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト

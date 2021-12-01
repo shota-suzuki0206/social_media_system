@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import actions.views.FollowConverter;
@@ -40,4 +41,32 @@ public class FollowService extends ServiceBase {
         return count;
     }
 
+
+    /**
+     * フォローテーブルに情報を登録する
+     * @param fv FollowViewインスタンス
+     */
+    public void create(FollowView fv) {
+
+        // 現在日時を取得
+        LocalDateTime ldt = LocalDateTime.now();
+        // セッターで値をセット
+        fv.setCreatedAt(ldt);
+        fv.setUpdatedAt(ldt);
+        // データベースに保存
+        createInternal(fv);
+
+    }
+
+    /**
+     * いいねデータを1件登録する
+     * @param fv FollowViewインスタンス
+     */
+    private void createInternal(FollowView fv) {
+
+        em.getTransaction().begin();
+        em.persist(FollowConverter.toModel(fv));
+        em.getTransaction().commit();
+
+    }
 }

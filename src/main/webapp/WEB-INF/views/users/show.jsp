@@ -6,15 +6,30 @@
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="actFav" value="${ForwardConst.ACT_FAV.getValue()}" />
+<c:set var="actFlw" value="${ForwardConst.ACT_FLW.getValue()}" />
+
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
+<c:set var="commDel" value="${ForwardConst.CMD_DESTROY.getValue()}" />
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <h2><c:out value="${user.name}" />&nbsp;さんのマイページ</h2><br />
 
-        <div id="my_page_list">
+        <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+            <input type="submit" value="フォロー">
+        </form>
+        <form action="<c:url value='?action=${actFlw}&command=${commDel}' />" method="POST">
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+            <input type="submit" value="フォロー解除">
+        </form>
+
+        <div class="my_page_list">
             <p><a href="<c:url value='?action=${actFav}&command=${commIdx}&id=${user.id}' />">お気に入り投稿一覧(${favorites_count}件)</a></p>
+            <p><a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${user.id}' />">フォロー一覧</a></p>
+            <p>フォロワー一覧</p>
         </div>
 
         <br />

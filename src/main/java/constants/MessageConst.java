@@ -20,6 +20,8 @@ public enum MessageConst {
     I_COM_REGISTERED("コメントを投稿しました。"),
     I_FAV_REGISTERED("いいねしました。"),
     I_FAV_DELETED("いいねを解除しました。"),
+    I_FLW_REGISTERED("フォローしました。"),
+    I_FLW_DELETED("フォローを解除しました。"),
 
     //バリデーション
     E_NONAME("名前を入力してください"),

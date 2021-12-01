@@ -10,6 +10,7 @@ import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.FollowService;
 import services.UserService;
 
@@ -58,6 +59,47 @@ public class FollowAction extends ActionBase {
 
         //一覧画面を表示
         forward(ForwardConst.FW_FLW_INDEX);
+    }
+
+    /**
+     * フォローの登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException{
+
+        //CSRF対策 tokenのチェック
+        if(checkToken()) {
+
+            //セッションからログイン中のユーザー情報を取得
+            UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
+            //セッションから詳細画面を開いたユーザーのidを取得
+            Integer id = getSessionScope(AttributeConst.USE_ID);
+
+            //idを条件にユーザー情報を取得する
+            UserView flw = useService.findOne(id);
+
+            //セッションスコープからユーザーidを消去
+            removeSessionScope(AttributeConst.USE_ID);
+
+            //パラメータの値をもとにフォロー情報のインスタンスを作成する
+            FollowView fv = new FollowView(
+                    null,
+                    uv, //ログインしているユーザーをフォローユーザーとして登録する
+                    flw, //詳細画面のユーザーをフォロワーとして登録する
+                    null,
+                    null);
+
+            //フォロー情報登録
+            service.create(fv);
+
+            //セッションに登録完了のフラッシュメッセージを登録
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_FLW_REGISTERED.getMessage());
+
+            //ユーザー詳細ページにリダイレクト
+            redirect(ForwardConst.ACT_USE, ForwardConst.CMD_SHOW, id);
+        }
     }
 
 }

@@ -87,7 +87,7 @@ public class CommentAction extends ActionBase {
 
                 //登録中にエラーがなかった場合
 
-                //セッションに登録完了のフラッシュメッセージを設定
+                //セッションにコメント投稿完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_COM_REGISTERED.getMessage());
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
 
