@@ -36,7 +36,7 @@ public class FollowAction extends ActionBase {
     }
 
     /**
-     * 一覧画面を表示する
+     * フォロー一覧画面を表示する
      * @throws ServletException
      * @throws IOException
      */
@@ -52,6 +52,7 @@ public class FollowAction extends ActionBase {
         //ユーザーがフォローした人数を取得
         long followsCount = service.countAllMine(uv);
 
+        putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
         putRequestScope(AttributeConst.FOLLOWS, follows); //取得したフォローデータ
         putRequestScope(AttributeConst.FLW_COUNT, followsCount); //ユーザーがフォローした人数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
@@ -59,6 +60,33 @@ public class FollowAction extends ActionBase {
 
         //一覧画面を表示
         forward(ForwardConst.FW_FLW_INDEX);
+    }
+
+    /**
+     * フォロワーー一覧画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void show() throws ServletException, IOException {
+
+        //セッションからユーザー情報を取得
+        UserView uv = useService.findOne(toNumber(getRequestParam(AttributeConst.USE_ID)));
+
+        //指定したユーザのフォロワーリストを指定されたページ数の一覧画面に表示する分のデータを取得
+        int page = getPage();
+        List<FollowView> followers = service.getFollowerPerPage(uv,page);
+
+        //フォロワーの人数を取得
+        long followersCount = service.countFollowerMine(uv);
+
+        putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
+        putRequestScope(AttributeConst.FOLLOWERS, followers); //取得したフォロワーデータ
+        putRequestScope(AttributeConst.FOLLOWERS_COUNT, followersCount); //フォロワーの人数
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+        //一覧画面を表示
+        forward(ForwardConst.FW_FLW_SHOW);
     }
 
     /**

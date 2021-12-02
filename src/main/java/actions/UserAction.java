@@ -190,7 +190,7 @@ public class UserAction extends ActionBase {
         //いいねした投稿の件数をユーザーIDを使って取得する
         long favoritesCount = favService.countAllMine(uv);
 
-        //セッションからログイン中の従業員情報を取得
+        //セッションからログイン中のユーザー情報を取得
         UserView loginUser = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
 
         //ログインしているユーザーが詳細画面を開いたユーザーをフォローしているか判定
@@ -198,6 +198,9 @@ public class UserAction extends ActionBase {
 
         //対象のユーザーがフォローした人数を取得
         long followsCount = flwService.countAllMine(uv);
+
+        //対象のユーザーのフォロワー人数を取得
+        long followersCount = flwService.countFollowerMine(uv);
 
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
@@ -207,10 +210,12 @@ public class UserAction extends ActionBase {
         }
 
         putSessionScope(AttributeConst.USE_ID, uv.getId()); //対象のユーザーのidをセッションスコープに登録する
-        putRequestScope(AttributeConst.FLW_FLAG, follow_flag);// すでにいいねしているかのフラグ
+        putRequestScope(AttributeConst.FLW_FLAG, follow_flag);// すでにフォローしているかのフラグ
         putRequestScope(AttributeConst.FLW_COUNT, followsCount); //ユーザーがフォローした人数
+        putRequestScope(AttributeConst.FOLLOWERS_COUNT, followersCount); //ユーザーがフォローした人数
         putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
+        putRequestScope(AttributeConst.LOGIN_USER, loginUser); //取得したユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
         putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ユーザーが作成した投稿の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数

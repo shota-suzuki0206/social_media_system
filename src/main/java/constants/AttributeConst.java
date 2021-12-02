@@ -33,6 +33,7 @@ public enum AttributeConst {
     USE_EMAIL("email"),
     USE_PASS("password"),
     USE_REPASS("password_confirmation"),
+    LOGIN_USER("login_user"),
 
     //削除フラグ
     DEL_FLAG_TRUE(1),
@@ -58,11 +59,13 @@ public enum AttributeConst {
     FAV_COUNT("favorites_count"),
     FAV_FLAG("favorite_flag"),
 
-    //お気に入り管理
+    //フォロー管理
     FOLLOW("follow"),
     FOLLOWS("follows"),
     FLW_COUNT("follows_count"),
-    FLW_FLAG("follow_flag");
+    FLW_FLAG("follow_flag"),
+    FOLLOWERS("followers"),
+    FOLLOWERS_COUNT("followers_count");
 
     private final String text;
     private final Integer i;

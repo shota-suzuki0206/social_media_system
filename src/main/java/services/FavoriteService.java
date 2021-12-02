@@ -84,7 +84,7 @@ public class FavoriteService extends ServiceBase {
      */
     public void destroy(ReportView rv, UserView uv) {
 
-        //従業員id、日報idを条件にデータを取得
+        //ユーザーid、投稿idを条件にデータを取得
         Favorite f = em.createNamedQuery(JpaConst.Q_FAV_GET_BY_USEID_AND_REPID, Favorite.class)
                 .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(uv))
                 .setParameter(JpaConst.JPQL_PARM_REPORT, ReportConverter.toModel(rv))

@@ -51,7 +51,7 @@ public class CommentAction extends ActionBase {
             //セッションスコープから投稿idを取得
             Integer id = getSessionScope(AttributeConst.REP_ID);
 
-            // idを条件に日報データを取得する
+            //idを条件に投稿データを取得する
             ReportView rv = rs.findOne(id);
 
             //セッションスコープから投稿idを消去
@@ -63,13 +63,13 @@ public class CommentAction extends ActionBase {
             //パラメータの値をもとにコメント情報のインスタンスを作成する
             CommentView cv = new CommentView(
                     null,
-                    uv, //ログインしている従業員を、日報作成者として登録する
+                    uv, //ログインしているユーザーを、投稿の作成者として登録する
                     rv,
                     getRequestParam(AttributeConst.COM_CONTENT),
                     null,
                     null);
 
-            //日報情報登録
+            //投稿情報登録
             List<String> errors = service.create(cv);
 
 

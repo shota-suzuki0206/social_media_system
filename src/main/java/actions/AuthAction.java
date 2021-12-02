@@ -67,7 +67,7 @@ public class AuthAction extends ActionBase {
         String plainPass = getRequestParam(AttributeConst.USE_PASS);
         String pepper = getContextScope(PropertyConst.PEPPER);
 
-        //有効な従業員か調べる
+        //有効なユーザーか調べる
         Boolean isValidUser = service.validateLogin(email, plainPass, pepper);
 
         if (isValidUser) {
@@ -76,9 +76,9 @@ public class AuthAction extends ActionBase {
             //CSRF対策 tokenをチェック
             if (checkToken()) {
 
-                //ログインした従業員のDBデータを取得
+                //ログインしたユーザーのDBデータを取得
                 UserView uv = service.findOne(email, plainPass, pepper);
-                //セッションにログインした従業員を設定
+                //セッションにログインしたユーザーを設定
                 putSessionScope(AttributeConst.LOGIN_USE, uv);
                 //セッションにログイン完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
@@ -92,27 +92,27 @@ public class AuthAction extends ActionBase {
             putRequestScope(AttributeConst.TOKEN, getTokenId());
             //認証失敗エラーメッセージ表示フラグをたてる
             putRequestScope(AttributeConst.LOGIN_ERR, true);
-            //入力された従業員コードを設定
+            //入力されたユーザーコードを設定
             putRequestScope(AttributeConst.USE_EMAIL, email);
 
             //ログイン画面を表示
             forward(ForwardConst.FW_LOGIN);
         }
     }
-    
+
     /**
      * ログアウト処理を行う
      * @throws ServletException
      * @throws IOException
      */
     public void logout() throws ServletException, IOException {
-        
+
         //セッションからログインユーザーのパラメータを削除
         removeSessionScope(AttributeConst.LOGIN_USE);
-        
+
         //セッションにログアウト時のフラッシュメッセージを追加
         putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
-        
+
         //ログイン画面にリダイレクト
         redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
     }

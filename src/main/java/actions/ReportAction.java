@@ -244,7 +244,7 @@ public class ReportAction extends ActionBase {
     }
 
     /**
-     * 物理削除を行う
+     * 削除を行う
      * @throws ServletException
      * @throws IOException
      */
@@ -253,7 +253,7 @@ public class ReportAction extends ActionBase {
         //CSRF対策 tokenのチェック
         if (checkToken()) {
 
-            //idを条件に投稿データを論理削除する
+            //idを条件に投稿データを削除する
             service.destroy(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
             //セッションに削除完了のフラッシュメッセージを設定

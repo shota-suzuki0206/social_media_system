@@ -93,7 +93,7 @@ public class FavoriteAction extends ActionBase{
             //セッションスコープから投稿idを取得
             Integer id = getSessionScope(AttributeConst.REP_ID);
 
-            // idを条件に投稿データを取得する
+            //idを条件に投稿データを取得する
             ReportView rv = rs.findOne(id);
 
             //セッションスコープから投稿idを消去
@@ -138,7 +138,7 @@ public class FavoriteAction extends ActionBase{
             //セッションスコープから投稿idを取得
             Integer id = getSessionScope(AttributeConst.REP_ID);
 
-            // idを条件に投稿データを取得する
+            //idを条件に投稿データを取得する
             ReportView rv = rs.findOne(id);
 
             //セッションスコープから投稿idを消去

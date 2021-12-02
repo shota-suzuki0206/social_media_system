@@ -13,7 +13,7 @@ import models.validators.UserValidator;
 import utils.EncryptUtil;
 
 /**
- * 従業員テーブルの操作に関わる処理を行うクラス
+ * ユーザーテーブルの操作に関わる処理を行うクラス
  */
 public class UserService extends ServiceBase {
 
@@ -55,7 +55,7 @@ public class UserService extends ServiceBase {
             //パスワードのハッシュ化
             String pass = EncryptUtil.getPasswordEncrypt(plainPass, pepper);
 
-            //メールアドレスとハッシュ化済パスワードを条件に未削除の従業員を一件取得する
+            //メールアドレスとハッシュ化済パスワードを条件に未削除のユーザーを一件取得する
             u = em.createNamedQuery(JpaConst.Q_USE_GET_BY_EMAIL_AND_PASS, User.class)
                     .setParameter(JpaConst.JPQL_PARM_EMAIL, email)
                     .setParameter(JpaConst.JPQL_PARM_PASSWORD, pass)

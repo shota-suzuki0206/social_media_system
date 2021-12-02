@@ -29,9 +29,9 @@ public class FollowService extends ServiceBase {
     }
 
     /**
-     * 指定したユーザーが作成した投稿データの件数を取得し、返却する
+     * 指定したユーザーがフォローした人数を取得し、返却する
      * @param user
-     * @return 投稿データの件数
+     * @return フォローした人数
      */
     public long countAllMine(UserView follow) {
         long count = (long) em.createNamedQuery(JpaConst.Q_FLW_COUNT_ALL_MINE, Long.class)
@@ -41,6 +41,34 @@ public class FollowService extends ServiceBase {
         return count;
     }
 
+    /**
+     * 指定したユーザーのフォロワーを、指定されたページ数の一覧画面に表示する文取得しFollowViewのリストで返却する
+     * @param user ユーザー
+     * @param page ページ数
+     * @return 一覧画面に表示するデータのリスト
+     */
+    public List<FollowView> getFollowerPerPage(UserView follower, int page) {
+
+        List<Follow> followers = em.createNamedQuery(JpaConst.Q_FLW_GET_FLW_MINE, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, UserConverter.toModel(follower))
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+        return FollowConverter.toViewList(followers);
+    }
+
+    /**
+     * フォロワーの人数を取得し、返却する
+     * @param user
+     * @return フォロワーの人数
+     */
+    public long countFollowerMine(UserView follower) {
+        long count = (long) em.createNamedQuery(JpaConst.Q_FLW_COUNT_FLW_MINE, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, UserConverter.toModel(follower))
+                .getSingleResult();
+
+        return count;
+    }
 
     /**
      * フォローテーブルに情報を登録する

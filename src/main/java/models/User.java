@@ -83,7 +83,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     /**
-     * 削除された従業員かどうか
+     * 削除されたユーザーかどうか
      */
     @Column(name = JpaConst.USE_COL_DELETE_FLAG, nullable = false)
     private Integer deleteFlag;

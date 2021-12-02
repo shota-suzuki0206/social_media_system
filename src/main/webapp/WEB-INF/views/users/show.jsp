@@ -23,25 +23,27 @@
 
         <h2><c:out value="${user.name}" />&nbsp;さんのマイページ</h2><br />
 
-        <c:choose>
-            <c:when test="${follow_flag == false}" >
-                <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">
-                    <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-                    <input type="submit" value="フォロー">
-                </form>
-            </c:when>
-            <c:otherwise>
-                <form action="<c:url value='?action=${actFlw}&command=${commDel}' />" method="POST">
-                    <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-                    <input type="submit" value="フォロー解除">
-                </form>
-            </c:otherwise>
-        </c:choose>
+        <c:if test="${user.id != login_user.id }">
+            <c:choose>
+                <c:when test="${follow_flag == false}" >
+                    <form action="<c:url value='?action=${actFlw}&command=${commCrt}' />" method="POST">
+                        <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                        <input type="submit" value="フォロー">
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="<c:url value='?action=${actFlw}&command=${commDel}' />" method="POST">
+                        <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                        <input type="submit" value="フォロー解除">
+                    </form>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
 
         <div class="my_page_list">
             <p><a href="<c:url value='?action=${actFav}&command=${commIdx}&id=${user.id}' />">お気に入り投稿一覧(${favorites_count}件)</a></p>
             <p><a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${user.id}' />">フォロー一覧(${follows_count}人)</a></p>
-            <p>フォロワー一覧</p>
+            <p><a href="<c:url value='?action=${actFlw}&command=${commShow}&id=${user.id}' />">フォロワー一覧(${followers_count}人)</a></p>
         </div>
 
         <br />

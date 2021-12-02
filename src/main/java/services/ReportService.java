@@ -122,7 +122,7 @@ public class ReportService extends ServiceBase {
     }
 
     /**
-     * idを条件にデータを1件物理削除する
+     * idを条件にデータを1件削除する
      */
     public void destroy(int id)  {
 
