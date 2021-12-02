@@ -3,6 +3,8 @@ package services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import actions.views.FollowConverter;
+import actions.views.FollowView;
 import actions.views.ReportConverter;
 import actions.views.ReportView;
 import actions.views.UserConverter;
@@ -54,6 +56,22 @@ public class ReportService extends ServiceBase {
     public List<ReportView> getAllPage(int page) {
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL, Report.class)
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+                .setMaxResults(JpaConst.ROW_PER_PAGE)
+                .getResultList();
+        return ReportConverter.toViewList(reports);
+    }
+
+    /**
+     * 指定したユーザーがフォローしたユーザーをFollowViewのリストで返却する
+     * @param user ユーザー
+     * @return フォローしたユーザーのFollowViewのリスト
+     */
+    public List<ReportView> getFollowAllMine(UserView uv, List<FollowView> follows, int page) {
+
+        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_MINE, Report.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(uv))
+                .setParameter(JpaConst.JPQL_PARM_USER, FollowConverter.toModelList(follows))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();

@@ -6,18 +6,21 @@ import java.util.List;
 import javax.servlet.ServletException;
 
 import actions.views.FollowView;
+import actions.views.ReportView;
 import actions.views.UserView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
 import services.FollowService;
+import services.ReportService;
 import services.UserService;
 
 public class FollowAction extends ActionBase {
 
     private FollowService service;
     private UserService useService;
+    private ReportService repService;
 
     /**
      * メソッドを実行する
@@ -27,10 +30,12 @@ public class FollowAction extends ActionBase {
 
         service = new FollowService();
         useService = new UserService();
+        repService = new ReportService();
 
         //メソッドを実行
         invoke();
 
+        repService.close();
         useService.close();
         service.close();
     }
@@ -87,6 +92,31 @@ public class FollowAction extends ActionBase {
 
         //一覧画面を表示
         forward(ForwardConst.FW_FLW_SHOW);
+    }
+
+    /**
+     * タイムライン画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void timeline() throws ServletException, IOException {
+
+        //セッションからログイン中の従業員情報を取得
+        UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
+
+        //指定したユーザのフォローデータを取得
+        List<FollowView> follows = service.getFollowAllMine(uv);
+
+        //ログインユーザーかフォローユーザの投稿データを取得する
+        int page = getPage();
+        List<ReportView> reports = repService.getFollowAllMine(uv,follows,page);
+
+        putRequestScope(AttributeConst.REPORT, reports); //取得した投稿データ
+        putRequestScope(AttributeConst.PAGE, page); //ページ数
+        putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+        //一覧画面を表示
+        forward(ForwardConst.FW_FLW_TIMELINE);
     }
 
     /**

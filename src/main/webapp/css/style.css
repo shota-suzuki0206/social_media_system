@@ -108,16 +108,16 @@ tr.row0 {
 }
 
 #header_menu {
-    width: 73%;
+    width: 85%;
     padding-top: 17px;
-    padding-left: 3%;
+    padding-left: 2%;
     display: inline-block;
 }
 
 #user_name {
     color: #cccccc;
-    width: 20%;
-    padding-right: 3%;
+    width: 10%;
+    padding-right: 2%;
     text-align: right;
     display: inline-block;
 }

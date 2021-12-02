@@ -99,12 +99,12 @@ public interface JpaConst {
     String Q_USE_COUNT_RESISTERED_BY_EMAIL = ENTITY_USE + ".countRegisteredByEmail";
     String Q_USE_COUNT_RESISTERED_BY_EMAIL_DEF = "SELECT COUNT(u) FROM User AS u WHERE u.email = :" + JPQL_PARM_EMAIL;
 
-    //全ての投稿記事をidの降順に取得する
+    //未削除のユーザーが作成した全ての投稿記事をidの降順に取得する
     String Q_REP_GET_ALL = ENTITY_REP + ".getAll";
-    String Q_REP_GET_ALL_DEF = "SELECT r FROM Report AS r ORDER BY r.id DESC";
-    //全ての投稿記事の件数を取得する
+    String Q_REP_GET_ALL_DEF = "SELECT r FROM Report AS r JOIN r.user u WHERE u.deleteFlag=0 ORDER BY r.id DESC";
+    //未削除のユーザーが作成した全ての投稿記事の件数を取得する
     String Q_REP_COUNT = ENTITY_REP + ".count";
-    String Q_REP_COUNT_DEF = "SELECT COUNT(r) FROM Report AS r";
+    String Q_REP_COUNT_DEF = "SELECT COUNT(r) FROM Report AS r JOIN r.user u WHERE u.deleteFlag=0";
     //指定したユーザーが作成した投稿記事を全件idの降順で取得する
     String Q_REP_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
     String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.user = :" + JPQL_PARM_USER
@@ -113,25 +113,25 @@ public interface JpaConst {
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
     String Q_REP_COUNT_ALL_MINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.user = :" + JPQL_PARM_USER;
 
-    //指定した投稿へのコメントを全件idの昇順で取得する
+    //指定した投稿への未削除ユーザーのコメントを全件idの昇順で取得する
     String Q_COM_GET_ALL_MINE = ENTITY_COM + ".getAllMine";
-    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT+ " ORDER BY c.id";
-    //指定した投稿へのコメントの件数を取得する
+    String Q_COM_GET_ALL_MINE_DEF = "SELECT c FROM Comment AS c JOIN c.user u WHERE u.deleteFlag=0 AND c.report = :" + JPQL_PARM_REPORT+ " ORDER BY c.id";
+    //指定した投稿への未削除ユーザーのコメントの件数を取得する
     String Q_COM_COUNT_ALL_MINE = ENTITY_COM + ".countAllMine";
-    String Q_COM_COUNT_ALL_MINE_DEF = "SELECT COUNT(c) FROM Comment AS c WHERE c.report = :" + JPQL_PARM_REPORT;
+    String Q_COM_COUNT_ALL_MINE_DEF = "SELECT COUNT(c) FROM Comment AS c JOIN c.user u WHERE u.deleteFlag=0 AND c.report = :" + JPQL_PARM_REPORT;
 
-    //指定したユーザーがいいね！した投稿記事を全件idの降順で取得する
+    //指定したユーザーがいいね！した未削除ユーザーの投稿記事を全件idの降順で取得する
     String Q_FAV_GET_ALL_MINE = ENTITY_FAV + ".getAllMine";
-    String Q_FAV_GET_ALL_MINE_DEF = "SELECT f FROM Favorite AS f WHERE f.user = :" + JPQL_PARM_USER +" ORDER BY f.id DESC";
-    //指定したユーザーがいいね！した投稿の件数を取得する
+    String Q_FAV_GET_ALL_MINE_DEF = "SELECT f FROM Favorite AS f JOIN f.user u WHERE u.deleteFlag=0 AND f.user = :" + JPQL_PARM_USER +" ORDER BY f.id DESC";
+    //指定したユーザーがいいね！した未削除ユーザーの投稿の件数を取得する
     String Q_FAV_COUNT_ALL_MINE = ENTITY_FAV + ".countAllMine";
-    String Q_FAV_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.user = :" + JPQL_PARM_USER;
-    //指定した投稿にいいねしたユーザーの一覧を取得する
+    String Q_FAV_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Favorite AS f JOIN f.user u WHERE u.deleteFlag=0 AND f.user = :" + JPQL_PARM_USER;
+    //指定した投稿にいいねした未削除ユーザーの一覧を取得する
     String Q_FAV_GET_BY_REP_ID = ENTITY_FAV + ".getByReportId";
-    String Q_FAV_GET_BY_REP_ID_DEF = "SELECT f FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
-    //指定した投稿へのいいねの件数を取得する
+    String Q_FAV_GET_BY_REP_ID_DEF = "SELECT f FROM Favorite AS f JOIN f.user u WHERE u.deleteFlag=0 AND f.report = :" + JPQL_PARM_REPORT;
+    //指定した投稿への未削除ユーザーのいいねの件数を取得する
     String Q_FAV_COUNT = ENTITY_FAV + ".count";
-    String Q_FAV_COUNT_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.report = :" + JPQL_PARM_REPORT;
+    String Q_FAV_COUNT_DEF = "SELECT COUNT(f) FROM Favorite AS f JOIN f.user u WHERE u.deleteFlag=0 AND f.report = :" + JPQL_PARM_REPORT;
     //ユーザーIDとレポートIDを条件にいいねデータを取得する
     String Q_FAV_GET_BY_USEID_AND_REPID = ENTITY_FAV + ".getByUseIdAndRepId";
     String Q_FAV_GET_BY_USEID_AND_REPID_DEF = "SELECT f FROM Favorite AS f WHERE f.user = :"+ JPQL_PARM_USER + " AND f.report = :" + JPQL_PARM_REPORT;
@@ -139,24 +139,24 @@ public interface JpaConst {
     String Q_FAV_COUNT_BY_USEID_AND_REPID = ENTITY_FAV + ".countByUseIdAndRepId";
     String Q_FAV_COUNT_BY_USEID_AND_REPID_DEF = "SELECT COUNT(f) FROM Favorite AS f WHERE f.user = :"+ JPQL_PARM_USER + " AND f.report = :" + JPQL_PARM_REPORT;
 
-    //指定したユーザーがフォローしたユーザーを全件idの降順で取得する
+    //指定したユーザーがフォローした未削除のユーザーを全件idの降順で取得する
     String Q_FLW_GET_ALL_MINE = ENTITY_FLW + ".getAllMine";
-    String Q_FLW_GET_ALL_MINE_DEF = "SELECT f FROM Follow AS f WHERE f.follow = :" + JPQL_PARM_FOLLOW + " ORDER BY f.id DESC";
-    //指定したユーザーがフォローした人数を取得する
+    String Q_FLW_GET_ALL_MINE_DEF = "SELECT f FROM Follow AS f JOIN f.follower u WHERE u.deleteFlag=0 AND f.follow = :" + JPQL_PARM_FOLLOW + " ORDER BY f.id DESC";
+    //指定したユーザーがフォローした未削除ユーザー人数を取得する
     String Q_FLW_COUNT_ALL_MINE = ENTITY_FLW + ".countAllMine";
-    String Q_FLW_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :" + JPQL_PARM_FOLLOW;
+    String Q_FLW_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f JOIN f.follower u WHERE u.deleteFlag=0 AND f.follow = :" + JPQL_PARM_FOLLOW;
     //フォローIDとフォロワーIDを条件に該当するフォローデータを取得する
     String Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER = ENTITY_FLW + ".getByFollowAndFollower";
     String Q_FLW_GET_BY_FOLLOW_AND_FOLLOWER_DEF = "SELECT f FROM Follow AS f WHERE f.follow = :"+ JPQL_PARM_FOLLOW + " AND f.follower = :" + JPQL_PARM_FOLLOWER;
     //フォローIDとフォロワーIDを条件に該当するフォローデータの件数を取得する
     String Q_FLW_COUNT_BY_FOLLOW_AND_FOLLOWER = ENTITY_FLW + "countByFollowAndFollower";
     String Q_FLW_COUNT_BY_FOLLOW_AND_FOLLOWER_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.follow = :"+ JPQL_PARM_FOLLOW + " AND f.follower = :" + JPQL_PARM_FOLLOWER;
-    //指定したユーザーのフォロワーを全件idの降順で取得する
+    //指定したユーザーの未削除のフォロワーを全件idの降順で取得する
     String Q_FLW_GET_FLW_MINE = ENTITY_FLW + ".getFlwMine";
-    String Q_FLW_GET_FLW_MINE_DEF = "SELECT f FROM Follow AS f WHERE f.follower = :" + JPQL_PARM_FOLLOWER + " ORDER BY f.id DESC";
-    //指定したユーザーのフォロワーの人数を取得する
+    String Q_FLW_GET_FLW_MINE_DEF = "SELECT f FROM Follow AS f JOIN f.follow u WHERE u.deleteFlag=0 AND f.follower = :" + JPQL_PARM_FOLLOWER + " ORDER BY f.id DESC";
+    //指定したユーザーの未削除フォロワーの人数を取得する
     String Q_FLW_COUNT_FLW_MINE = ENTITY_FLW + ".countFlwMine";
-    String Q_FLW_COUNT_FLW_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.follower = :" + JPQL_PARM_FOLLOWER;
+    String Q_FLW_COUNT_FLW_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f JOIN f.follow u WHERE u.deleteFlag=0 AND f.follower = :" + JPQL_PARM_FOLLOWER;
 
 
 }

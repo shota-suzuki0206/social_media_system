@@ -146,4 +146,17 @@ public class FollowService extends ServiceBase {
 
         }
     }
+
+    /**
+     * 指定したユーザーがフォローしたユーザーをFollowViewのリストで返却する
+     * @param user ユーザー
+     * @return フォローしたユーザーのFollowViewのリスト
+     */
+    public List<FollowView> getFollowAllMine(UserView uv) {
+
+        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FLW_GET_ALL_MINE, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOW, UserConverter.toModel(uv))
+                .getResultList();
+        return FollowConverter.toViewList(follows);
+    }
 }

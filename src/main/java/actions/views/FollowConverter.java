@@ -60,6 +60,21 @@ public class FollowConverter {
     }
 
     /**
+     * ViewモデルのリストからDTOモデルのリストを作成する
+     * @param list Viewモデルのリスト
+     * @return DTOモデルのリスト
+     */
+    public static List<Follow> toModelList(List<FollowView> list) {
+        List<Follow> evs = new ArrayList<>();
+
+        for (FollowView fv : list) {
+            evs.add(toModel(fv));
+        }
+
+        return evs;
+    }
+
+    /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
      * @param f DTOモデル（コピー先）
      * @param fv Viewモデル（コピー元）
