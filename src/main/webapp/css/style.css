@@ -163,6 +163,7 @@ table#report_list .show_title {
 table#report_list .show_content {
     width: 25%;
     overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 table#report_list .show_created_at {
@@ -222,6 +223,7 @@ table#comment_list .comment_name {
 table#comment_list .comment_content {
     width: 50%;
     word-break: break-all;
+    white-space: pre-wrap;
 
 }
 

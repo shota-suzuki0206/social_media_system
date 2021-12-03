@@ -46,9 +46,10 @@
                     <th class="show_favorite_list">いいねした人の一覧</th>
                 </tr>
                 <tr>
+
                     <td><c:out value="${report.user.name}" /></td>
                     <td><c:out value="${report.title}" /></td>
-                    <td class="show_content"><pre><c:out value="${report.content}" /></pre></td>
+                    <td class="show_content"><c:out value="${report.content}" /></td>
 
                     <fmt:parseDate value="${report.createdAt}"
                         pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
@@ -128,7 +129,7 @@
                             <tr class="row${status.count % 2}">
                                 <td class="commennt_name"><c:out
                                         value="${comment.user.name}" /></td>
-                                <td class="comment_content" ><pre><c:out value="${comment.content}" /></pre></td>
+                                <td class="comment_content" ><c:out value="${comment.content}" /></td>
                                 <td class="comment_create_at"><fmt:formatDate
                                         value="${comCreate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                             </tr>
