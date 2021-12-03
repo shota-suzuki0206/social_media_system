@@ -147,16 +147,17 @@ public class FollowService extends ServiceBase {
         }
     }
 
-    /**
-     * 指定したユーザーがフォローしたユーザーをFollowViewのリストで返却する
-     * @param user ユーザー
-     * @return フォローしたユーザーのFollowViewのリスト
-     */
-    public List<FollowView> getFollowAllMine(UserView uv) {
 
-        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FLW_GET_ALL_MINE, Follow.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOW, UserConverter.toModel(uv))
-                .getResultList();
-        return FollowConverter.toViewList(follows);
+    /**
+     * 指定したユーザーがフォローした人数を取得し、返却する
+     * @param user
+     * @return フォローした人数
+     */
+    public long countTimeLine(UserView uv) {
+        long count = (long) em.createNamedQuery(JpaConst.Q_FLW_COUNT_TIMELINE, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_USER, UserConverter.toModel(uv))
+                .getSingleResult();
+
+        return count;
     }
 }

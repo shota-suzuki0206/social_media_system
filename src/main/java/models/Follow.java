@@ -42,7 +42,13 @@ import lombok.Setter;
             query = JpaConst.Q_FLW_GET_FLW_MINE_DEF),
     @NamedQuery(
             name =  JpaConst.Q_FLW_COUNT_FLW_MINE,
-            query = JpaConst.Q_FLW_COUNT_FLW_MINE_DEF)
+            query = JpaConst.Q_FLW_COUNT_FLW_MINE_DEF),
+    @NamedQuery(
+            name =  JpaConst.Q_FLW_GET_TIMELINE,
+            query = JpaConst.Q_FLW_GET_TIMELINE_DEF),
+    @NamedQuery(
+            name =  JpaConst.Q_FLW_COUNT_TIMELINE,
+            query = JpaConst.Q_FLW_COUNT_TIMELINE_DEF)
 
 })
 

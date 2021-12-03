@@ -104,13 +104,14 @@ public class FollowAction extends ActionBase {
         //セッションからログイン中の従業員情報を取得
         UserView uv = (UserView) getSessionScope(AttributeConst.LOGIN_USE);
 
-        //指定したユーザのフォローデータを取得
-        List<FollowView> follows = service.getFollowAllMine(uv);
-
         //ログインユーザーかフォローユーザの投稿データを取得する
         int page = getPage();
-        List<ReportView> reports = repService.getFollowAllMine(uv,follows,page);
+        List<ReportView> reports = repService.getTimeLine(uv,page);
 
+        //タイムラインの件数を取得する
+        long timeLineCount = service.countTimeLine(uv);
+
+        putRequestScope(AttributeConst.REP_COUNT, timeLineCount); //取得したタイムラインの投稿データ
         putRequestScope(AttributeConst.REPORT, reports); //取得した投稿データ
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数

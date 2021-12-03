@@ -41,8 +41,8 @@
                 <a href="<c:url value='?action=${actAuth}&command=${commOut}' />">ログアウト</a>
             </div>
         </div>
-        <div id="content">${param.content}</div>
-
+        <div id="content">${param.content}</div><br /><br />
+        <div id="footer">by Shota Suzuki</div><br />
     </div>
 </body>
 </html>

@@ -48,7 +48,7 @@
                 <tr>
                     <td><c:out value="${report.user.name}" /></td>
                     <td><c:out value="${report.title}" /></td>
-                    <td><pre><c:out value="${report.content}" /></pre></td>
+                    <td class="show_content"><pre><c:out value="${report.content}" /></pre></td>
 
                     <fmt:parseDate value="${report.createdAt}"
                         pattern="yyyy-MM-dd'T'HH:mm:ss" var="createDay" type="date" />
@@ -91,12 +91,7 @@
                     href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この投稿を編集する</a>
             </p>
         </c:if>
-        <br />
-        <br />
-        <br />
-
-        <h3>コメント一覧</h3>
-        <br />
+        <br /><br />
 
         <form method="POST"
             action="<c:url value='/?action=${actCom}&command=${commCrt}' />">
@@ -110,6 +105,8 @@
             <br />
             <br />
         </form>
+        <h3>コメント一覧</h3>
+        <br />
 
         <c:choose>
             <c:when test="${comments_count == 0}">
@@ -131,7 +128,7 @@
                             <tr class="row${status.count % 2}">
                                 <td class="commennt_name"><c:out
                                         value="${comment.user.name}" /></td>
-                                <td class="comment_content"><pre><c:out value="${comment.content}" /></pre></td>
+                                <td class="comment_content" ><pre><c:out value="${comment.content}" /></pre></td>
                                 <td class="comment_create_at"><fmt:formatDate
                                         value="${comCreate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                             </tr>

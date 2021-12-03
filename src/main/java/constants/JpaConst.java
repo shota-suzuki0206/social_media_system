@@ -158,5 +158,11 @@ public interface JpaConst {
     String Q_FLW_COUNT_FLW_MINE = ENTITY_FLW + ".countFlwMine";
     String Q_FLW_COUNT_FLW_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f JOIN f.follow u WHERE u.deleteFlag=0 AND f.follower = :" + JPQL_PARM_FOLLOWER;
 
+    //タイムラインに表示するデータを取得する
+    String Q_FLW_GET_TIMELINE = ENTITY_FLW + ".getTimeLine";
+    String Q_FLW_GET_TIMELINE_DEF = "SELECT r FROM Report AS r WHERE r.user = :"+ JPQL_PARM_USER +" OR r.user IN (SELECT fol FROM Follow AS f JOIN f.follower AS fol WHERE f.follow = :user AND fol.deleteFlag=0) ORDER BY r.id DESC";
+    //タイムラインに表示するデータの件数を取得する
+    String Q_FLW_COUNT_TIMELINE = ENTITY_FLW + ".countTimeLine";
+    String Q_FLW_COUNT_TIMELINE_DEF = "SELECT COUNT(r) FROM Report AS r WHERE r.user = :"+ JPQL_PARM_USER +" OR r.user IN (SELECT fol FROM Follow AS f JOIN f.follower AS fol WHERE f.follow = :user AND fol.deleteFlag=0)";
 
 }
