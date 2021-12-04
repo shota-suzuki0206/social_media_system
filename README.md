@@ -5,8 +5,8 @@
 Springフレームワークで採用されているフロントコントローラデザインパターンを、フレームワークなしで実装したアプリです。
 
 # 設計図
-
-![サイトマップ](https://gyazo.com/e9e36f89a0bf00645ca6085f2bb614f2/raw)
+  
+![サイトマップ](https://gyazo.com/c53eb7740b1e84bf9c79752092bbad22/raw)
 
 ![データベース図](https://gyazo.com/e8ce73256dd4e14b7485d86e899c65f8/raw)
 
