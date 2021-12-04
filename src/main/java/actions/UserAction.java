@@ -215,7 +215,7 @@ public class UserAction extends ActionBase {
         putRequestScope(AttributeConst.FOLLOWERS_COUNT, followersCount); //ユーザーがフォローした人数
         putRequestScope(AttributeConst.FAV_COUNT, favoritesCount); //ユーザーがいいね！した投稿の数
         putRequestScope(AttributeConst.USER, uv); //取得したユーザーデータ
-        putRequestScope(AttributeConst.LOGIN_USER, loginUser); //取得したユーザーデータ
+        putRequestScope(AttributeConst.LOGIN_USER, loginUser); //取得したログインユーザーデータ
         putRequestScope(AttributeConst.REPORTS, reports); //取得した投稿データ
         putRequestScope(AttributeConst.REP_COUNT, myReportsCount); //ユーザーが作成した投稿の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
@@ -224,5 +224,93 @@ public class UserAction extends ActionBase {
 
         //一覧画面を表示
         forward(ForwardConst.FW_USE_SHOW);
+    }
+
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void edit() throws ServletException, IOException {
+
+
+        //idを条件にユーザーデータを取得する
+        UserView uv = service.findOne(toNumber(getRequestParam(AttributeConst.USE_ID)));
+
+        if (uv == null || uv.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+            //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return;
+        }
+
+        putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+        putRequestScope(AttributeConst.USER, uv); //取得したユーザー情報
+
+        //編集画面を表示する
+        forward(ForwardConst.FW_USE_EDIT);
+
+    }
+
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void update() throws ServletException, IOException {
+
+        //CSRF対策 tokenのチェック
+        if (checkToken()) {
+            //パラメータの値を元にユーザー情報のインスタンスを作成する
+            UserView uv = new UserView(
+                    toNumber(getRequestParam(AttributeConst.USE_ID)),
+                    getRequestParam(AttributeConst.USE_NAME),
+                    getRequestParam(AttributeConst.USE_EMAIL),
+                    getRequestParam(AttributeConst.USE_PASS),
+                    null,
+                    null,
+                    AttributeConst.DEL_FLAG_FALSE.getIntegerValue());
+
+            //パスワードの一致チェック
+
+            if (!getRequestParam(AttributeConst.USE_PASS).equals(getRequestParam(AttributeConst.USE_REPASS))) {
+
+                String errors = "パスワードとパスワード（確認用）が不一致です。";
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.USER, uv); //入力されたユーザー情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_USE_EDIT);
+
+            } else {
+
+            //アプリケーションスコープからpepper文字列を取得
+            String pepper = getContextScope(PropertyConst.PEPPER);
+
+            //ユーザー情報更新
+            List<String> errors = service.update(uv, pepper);
+
+            if (errors.size() > 0) {
+                //更新中にエラーが発生した場合
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.USER, uv); //入力されたユーザー情報
+                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
+
+                //編集画面を再表示
+                forward(ForwardConst.FW_USE_EDIT);
+            } else {
+                //更新中にエラーがなかった場合
+
+                //セッションに更新完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.ACT_USE, ForwardConst.CMD_SHOW, toNumber(getRequestParam(AttributeConst.USE_ID)));
+            }
+        }
+        }
     }
 }

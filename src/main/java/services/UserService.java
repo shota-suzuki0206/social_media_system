@@ -122,6 +122,70 @@ public class UserService extends ServiceBase {
     }
 
     /**
+     * 画面から入力されたユーザーの更新内容を元にデータを1件作成し、ユーザーテーブルを更新する
+     * @param uv 画面から入力されたユーザーの登録内容
+     * @param pepper pepper文字列
+     * @return バリデーションや更新処理中に発生したエラーのリスト
+     */
+    public List<String> update(UserView uv, String pepper) {
+
+        //idを条件に登録済みのユーザー情報を取得する
+        UserView savedUse = findOne(uv.getId());
+
+        boolean validateEmail = false;
+        if (!savedUse.getEmail().equals(uv.getEmail())) {
+            //メールアドレスを更新する場合
+
+            //メールアドレスについてのバリデーションを行う
+            validateEmail = true;
+            //変更後のメールアドレスを設定する
+            savedUse.setEmail(uv.getEmail());
+        }
+
+        boolean validatePass = false;
+        if (uv.getPassword() != null && !uv.getPassword().equals("")) {
+            //パスワードに入力がある場合
+
+            //パスワードについてのバリデーションを行う
+            validatePass = true;
+
+            //変更後のパスワードをハッシュ化し設定する
+            savedUse.setPassword( EncryptUtil.getPasswordEncrypt(uv.getPassword(), pepper));
+
+        }
+
+        savedUse.setName(uv.getName()); //変更後の名前を設定する
+
+        //更新日時に現在時刻を設定する
+        LocalDateTime today = LocalDateTime.now();
+        savedUse.setUpdatedAt(today);
+
+        //更新内容についてバリデーションを行う
+        List<String> errors = UserValidator.validate(this, savedUse,validateEmail, validatePass);
+
+        //バリデーションエラーがなければデータを更新する
+        if (errors.size() == 0) {
+            update(savedUse);
+        }
+
+        //エラーを返却（エラーがなければ0件の空リスト）
+        return errors;
+    }
+
+    /**
+     * ユーザーデータを更新する
+     * @param ev 画面から入力されたユーザーの登録内容
+     */
+    private void update(UserView uv) {
+
+        em.getTransaction().begin();
+        User u = findOneInternal(uv.getId());
+        UserConverter.copyViewToModel(u, uv);
+        em.getTransaction().commit();
+
+    }
+
+    /**
      * メールアドレスとパスワードを条件に検索し、データが取得できるかどうかで認証結果を返却する
      * @param email メールアドレス
      * @param plainPass パスワード

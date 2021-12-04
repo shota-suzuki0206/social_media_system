@@ -7,11 +7,13 @@
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="actFav" value="${ForwardConst.ACT_FAV.getValue()}" />
 <c:set var="actFlw" value="${ForwardConst.ACT_FLW.getValue()}" />
+<c:set var="actUse" value="${ForwardConst.ACT_USE.getValue()}" />
 
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
 <c:set var="commDel" value="${ForwardConst.CMD_DESTROY.getValue()}" />
+<c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
@@ -45,6 +47,10 @@
             <p><a href="<c:url value='?action=${actFlw}&command=${commIdx}&id=${user.id}' />">フォロー一覧(${follows_count}人)</a></p>
             <p><a href="<c:url value='?action=${actFlw}&command=${commShow}&id=${user.id}' />">フォロワー一覧(${followers_count}人)</a></p>
         </div>
+
+        <c:if test="${user.id == login_user.id }">
+            <br /><p><a href="<c:url value='?action=${actUse}&command=${commEdit}&id=${user.id}' />">ユーザー情報を編集する</a></p>
+        </c:if>
 
         <br />
         <h3><c:out value="${user.name}" />&nbsp;さんの投稿一覧</h3>
