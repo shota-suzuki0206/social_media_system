@@ -1,16 +1,13 @@
 # social_media_system
 
 # 概要
-会員制の投稿サイトです。  
-日常の呟きや出来事をタイトルと内容を記入して投稿できるツールです。
+会員制の投稿サイトです。日常の呟きや出来事をタイトルと内容を記入して投稿できるツールです。  
+Springフレームワークで採用されているフロントコントローラデザインパターンを、フレームワークなしで実装したアプリです。
 
 # 設計図
 
-サイトマップ  
 ![サイトマップ](https://gyazo.com/e9e36f89a0bf00645ca6085f2bb614f2/raw)
 
-
-データベース図  
 ![データベース図](https://gyazo.com/e8ce73256dd4e14b7485d86e899c65f8/raw)
 
 
@@ -41,6 +38,32 @@ social_media_systemは以下の機能を実装しています。
 
 - TimeLine機能  
 自身の投稿とフォローしたユーザーの投稿のみを一覧にまとめて表示できます。
+
+# HerokuアプリのURL
+
+- HerokuアプリのURL  
+https://servlet-social-media-system.herokuapp.com/?action=Top&command=index
+
+- デモユーザー  
+ユーザーネーム: 田中　太郎  
+メールアドレス:「tanaka@gmail.com」  
+パスワード:「1234」
+
+
+# 使用した技術
+
+   - Java11
+   - Tomcat9
+   - Servlet/JSP
+   - JSTL
+   - HTML5/CSS3
+   - JavaScript
+   - MySQL
+   - Eclipse
+   - Maven
+   - JPA/Hibernate
+   - Git/Github
+   - Heroku
 
 # エピソード
 エンジニアに興味を持ちプログラミングの勉強(JAVA)を始めて2ケ月ほど経ちました。   
