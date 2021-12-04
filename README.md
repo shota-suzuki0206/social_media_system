@@ -39,7 +39,7 @@ social_media_systemは以下の機能を実装しています。
 - TimeLine機能  
 自身の投稿とフォローしたユーザーの投稿のみを一覧にまとめて表示できます。
 
-# HerokuアプリのURL
+# Heroku URL
 
 - HerokuアプリのURL  
 https://servlet-social-media-system.herokuapp.com/?action=Top&command=index
