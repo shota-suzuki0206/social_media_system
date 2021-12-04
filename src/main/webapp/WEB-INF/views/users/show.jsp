@@ -50,7 +50,7 @@
 
         <c:choose>
             <c:when test="${user.id == 2 }">
-                <br />デモユーザー使用時はユーザー情報編集機能を使用できません。<br />
+                <br /><p>ユーザー情報を編集する(デモユーザー使用時は使用できません。)</p>
             </c:when>
             <c:when test="${user.id == login_user.id }">
                 <br /><p><a href="<c:url value='?action=${actUse}&command=${commEdit}&id=${user.id}' />">ユーザー情報を編集する</a></p>
