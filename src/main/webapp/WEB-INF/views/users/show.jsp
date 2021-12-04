@@ -48,9 +48,18 @@
             <p><a href="<c:url value='?action=${actFlw}&command=${commShow}&id=${user.id}' />">フォロワー一覧(${followers_count}人)</a></p>
         </div>
 
-        <c:if test="${user.id == login_user.id }">
-            <br /><p><a href="<c:url value='?action=${actUse}&command=${commEdit}&id=${user.id}' />">ユーザー情報を編集する</a></p>
-        </c:if>
+        <c:choose>
+            <c:when test="${user.id == 2 }">
+                <br />デモユーザー使用時はユーザー情報編集機能を使用できません。<br />
+            </c:when>
+            <c:when test="${user.id == login_user.id }">
+                <br /><p><a href="<c:url value='?action=${actUse}&command=${commEdit}&id=${user.id}' />">ユーザー情報を編集する</a></p>
+            </c:when>
+            <c:otherwise>
+            </c:otherwise>
+        </c:choose>
+
+
 
         <br />
         <h3><c:out value="${user.name}" />&nbsp;さんの投稿一覧</h3>
